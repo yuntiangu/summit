@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:summit2/components/todo_home_button.dart';
 import 'package:summit2/constants.dart';
-import 'package:summit2/todo/todo_category_data.dart';
+import 'package:summit2/models/todo_category_data.dart';
 
 class CategoryList extends StatelessWidget {
   @override

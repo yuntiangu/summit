@@ -5,14 +5,14 @@ import 'package:summit2/constants.dart';
 import 'login_screen.dart';
 import 'signup_screen.dart';
 
-class HomeScreen extends StatefulWidget {
-  static String id = 'home_screen';
+class WelcomeScreen extends StatefulWidget {
+  static String id = 'welcome_screen';
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _WelcomeScreenState createState() => _WelcomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
