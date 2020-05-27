@@ -1,8 +1,11 @@
-import 'package:flutter/foundation.dart';
 import 'dart:collection';
 
+import 'package:flutter/foundation.dart';
+
 class CategoryData extends ChangeNotifier {
-  List<String> _categories = ['Test',];
+  List<String> _categories = [
+    'Test',
+  ];
 
   UnmodifiableListView<String> get categories {
     return UnmodifiableListView(_categories);
@@ -17,7 +20,7 @@ class CategoryData extends ChangeNotifier {
     notifyListeners();
   }
 
-  void deleteTask(String category) {
+  void deleteCategory(String category) {
     _categories.remove(category);
     notifyListeners();
   }
