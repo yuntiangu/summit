@@ -7,7 +7,7 @@ import 'package:summit2/constants.dart';
 import 'todo/todo_home.dart';
 
 class LoginScreen extends StatefulWidget {
-  static String id = 'login_screen';
+  static const String id = 'login_screen';
 
   @override
   _LoginScreenState createState() => _LoginScreenState();

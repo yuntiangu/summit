@@ -2,13 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:summit2/components/add_fab.dart';
 import 'package:summit2/constants.dart';
+import 'package:summit2/screens/login_screen.dart';
 import 'package:summit2/todo/category_list.dart';
 import 'package:summit2/todo/todo_task_data.dart';
+import 'package:summit2/components/bottom_bar.dart';
 
 import 'add_category_screen.dart';
 
 class TodoHome extends StatelessWidget {
-  static String id = 'todo_home';
+  static const String id = 'todo_home';
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +44,11 @@ class TodoHome extends StatelessWidget {
             ],
           ),
         ),
+        bottomNavigationBar: BottomBar(0),
       ),
     );
   }
 }
+
+
+

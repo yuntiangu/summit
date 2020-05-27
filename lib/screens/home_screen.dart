@@ -6,7 +6,7 @@ import 'login_screen.dart';
 import 'signup_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  static String id = 'home_screen';
+  static const String id = 'home_screen';
 
   @override
   _HomeScreenState createState() => _HomeScreenState();

@@ -8,7 +8,7 @@ import 'package:summit2/todo/todo_task_data.dart';
 import 'add_task_screen.dart';
 
 class TaskScreen extends StatelessWidget {
-  static String id = 'todo_task_screen';
+  static const String id = 'todo_task_screen';
 
   @override
   Widget build(BuildContext context) {
