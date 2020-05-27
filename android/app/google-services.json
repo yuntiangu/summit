@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1051576999591",
+    "firebase_url": "https://summit2-df7f0.firebaseio.com",
+    "project_id": "summit2-df7f0",
+    "storage_bucket": "summit2-df7f0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1051576999591:android:5c969bae4bce6e2a3c0582",
+        "android_client_info": {
+          "package_name": "yuntiangu.summit2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1051576999591-tjg1ratcrm0nf0i6u5sgtdiet1qtcbsq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCa8UfZuYUM6PPOV1WBIKntMSIEi7VOEpY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1051576999591-tjg1ratcrm0nf0i6u5sgtdiet1qtcbsq.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
