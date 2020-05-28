@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:summit2/components/add_fab.dart';
 import 'package:summit2/constants.dart';
-import 'package:summit2/todo/task_list.dart';
-import 'package:summit2/todo/todo_task_data.dart';
+import 'package:summit2/models/task/task_list.dart';
+import 'package:summit2/models/task/todo_task_data.dart';
 
 import 'add_task_screen.dart';
 
 class TaskScreen extends StatelessWidget {
   static String id = 'todo_task_screen';
+
+  final String whichCategory;
+  TaskScreen(this.whichCategory);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +23,7 @@ class TaskScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0.0,
         title: Text(
-          'All',
+          whichCategory,
           style: kHeaderTextStyle,
         ),
       ),
@@ -50,7 +53,7 @@ class TaskScreen extends StatelessWidget {
                     topLeft: Radius.circular(20.0),
                     topRight: Radius.circular(20.0),
                   )),
-              child: TasksList(),
+              child: TasksList(whichCategory),
             ),
           ),
         ],

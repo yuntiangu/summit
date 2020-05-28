@@ -1,6 +1,8 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:summit2/constants.dart';
-import 'package:summit2/screens/todo/task_screen.dart';
+import 'package:summit2/screens/todoScreens/task_screen.dart';
 
 class TodoHomeButton extends StatelessWidget {
   TodoHomeButton({this.icon, this.text, this.number, this.iconColour}) {
@@ -20,6 +22,12 @@ class TodoHomeButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(30.0),
       child: FlatButton(
+        onPressed: () {
+          Navigator.push(context,
+              MaterialPageRoute<DynamicLibrary>(builder: (context) {
+            return TaskScreen(text);
+          }));
+        },
         color: kGrey,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
@@ -53,9 +61,6 @@ class TodoHomeButton extends StatelessWidget {
             )
           ],
         ),
-        onPressed: () {
-          Navigator.pushNamed(context, TaskScreen.id);
-        },
       ),
     );
   }

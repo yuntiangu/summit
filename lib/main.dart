@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:summit2/constants.dart';
-import 'package:summit2/screens/home_screen.dart';
+import 'package:summit2/models/category/todo_category_data.dart';
 import 'package:summit2/screens/login_screen.dart';
 import 'package:summit2/screens/signup_screen.dart';
-import 'package:summit2/screens/todo/task_screen.dart';
-import 'package:summit2/screens/todo/todo_home.dart';
-import 'package:summit2/todo/todo_category_data.dart';
+import 'package:summit2/screens/todoScreens/todo_home.dart';
+import 'package:summit2/screens/welcome_screen.dart';
+
+import 'models/task/todo_task_data.dart';
 
 void main() {
   runApp(MyApp());
@@ -16,20 +17,26 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => CategoryData(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => CategoryData(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => TaskData(),
+        )
+      ],
       child: MaterialApp(
         theme: ThemeData(
           backgroundColor: Colors.white,
           primaryColor: kDarkBlueGrey,
         ),
-        initialRoute: HomeScreen.id,
+        initialRoute: WelcomeScreen.id,
         routes: {
-          HomeScreen.id: (context) => HomeScreen(),
+          WelcomeScreen.id: (context) => WelcomeScreen(),
           LoginScreen.id: (context) => LoginScreen(),
           SignupScreen.id: (context) => SignupScreen(),
           TodoHome.id: (context) => TodoHome(),
-          TaskScreen.id: (context) => TaskScreen(),
         },
       ),
     );

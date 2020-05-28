@@ -5,14 +5,14 @@ import 'package:summit2/constants.dart';
 import 'login_screen.dart';
 import 'signup_screen.dart';
 
-class HomeScreen extends StatefulWidget {
+class WelcomeScreen extends StatefulWidget {
   static String id = 'home_screen';
 
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _WelcomeScreenState createState() => _WelcomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,8 +23,13 @@ class _HomeScreenState extends State<HomeScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Image(
-                  image: AssetImage('images/logoMystic.png'),
+                Hero(
+                  tag: 'msytic',
+                  child: Container(
+                    child: Image(
+                      image: AssetImage('images/logoMystic.png'),
+                    ),
+                  ),
                 ),
                 SizedBox(
                   height: 20.0,
