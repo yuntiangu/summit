@@ -4,11 +4,12 @@ import 'package:summit2/components/add_fab.dart';
 import 'package:summit2/constants.dart';
 import 'package:summit2/models/category_list.dart';
 import 'package:summit2/models/todo_task_data.dart';
+import 'package:summit2/components/bottom_bar.dart';
 
 import 'add_category_screen.dart';
 
 class TodoHome extends StatelessWidget {
-  static String id = 'todo_home';
+  static const String id = 'todo_home';
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +43,11 @@ class TodoHome extends StatelessWidget {
             ],
           ),
         ),
+        bottomNavigationBar: BottomBar(0),
       ),
     );
   }
 }
+
+
+
