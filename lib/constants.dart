@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:summit2/screens/todo/todo_home.dart';
-import 'screens/calendar_screen.dart';
+import 'screens/calendar/calendar_screen.dart';
 import 'screens/progress_screen.dart';
 import 'screens/rewards_screen.dart';
 
