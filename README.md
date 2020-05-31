@@ -36,11 +36,10 @@ We would be including a simple gamification feature into our app. There will be 
 Additionally, we have a rewards system, whereby as the user completes tasks, he would be able to win new app icons.
 
 ## Tech Stack:
-
--Flutter
--FireBase
--LumiNUS API
--Git
+    -Flutter
+    -FireBase
+    -LumiNUS API
+    -Git
 
 [UI/UX Prototype](https://drive.google.com/file/d/1QaSjk1qGhQfM8YVW1si3e7FY4kyx8elP/view?usp=sharing)
 
