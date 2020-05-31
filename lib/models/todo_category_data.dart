@@ -3,9 +3,7 @@ import 'dart:collection';
 import 'package:flutter/foundation.dart';
 
 class CategoryData extends ChangeNotifier {
-  List<String> _categories = [
-    'Test',
-  ];
+  List<String> _categories = [];
 
   UnmodifiableListView<String> get categories {
     return UnmodifiableListView(_categories);
