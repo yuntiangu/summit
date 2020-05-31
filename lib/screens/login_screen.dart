@@ -4,7 +4,7 @@ import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:summit2/components/RoundedButton.dart';
 import 'package:summit2/constants.dart';
 
-import 'todo/todo_home.dart';
+import 'todoScreens/todo_home.dart';
 
 class LoginScreen extends StatefulWidget {
   static const String id = 'login_screen';
@@ -30,6 +30,14 @@ class _LoginScreenState extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
+              Flexible(
+                child: Hero(
+                  tag: 'mystic',
+                  child: Container(
+                    child: Image.asset('images/logoMystic.png'),
+                  ),
+                ),
+              ),
               TextField(
                 keyboardType: TextInputType.emailAddress,
                 textAlign: TextAlign.center,

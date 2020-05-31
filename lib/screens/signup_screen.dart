@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:summit2/components/RoundedButton.dart';
 import 'package:summit2/constants.dart';
-import 'package:summit2/screens/todo/todo_home.dart';
+import 'package:summit2/screens/todoScreens/todo_home.dart';
 
 class SignupScreen extends StatefulWidget {
   static const String id = 'signup_screen';
