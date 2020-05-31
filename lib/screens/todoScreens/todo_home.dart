@@ -12,6 +12,7 @@ class TodoHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         iconTheme: IconThemeData(
           color: kDarkBlueGrey, //change your color here
         ),
