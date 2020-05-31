@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:summit2/components/add_fab.dart';
 import 'package:summit2/constants.dart';
 import 'package:summit2/models/category/category_list.dart';
-
+import 'package:summit2/components/bottom_bar.dart';
 import 'add_category_screen.dart';
 
 class TodoHome extends StatelessWidget {
@@ -38,6 +38,7 @@ class TodoHome extends StatelessWidget {
           ],
         ),
       ),
+      bottomNavigationBar: BottomBar(0),
     );
   }
 }
