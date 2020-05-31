@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:summit2/constants.dart';
+import 'package:summit2/models/calendar/calendar_event_data.dart';
 import 'package:summit2/models/todo_category_data.dart';
+import 'package:summit2/models/todo_task_data.dart';
 import 'package:summit2/screens/login_screen.dart';
 import 'package:summit2/screens/progress_screen.dart';
 import 'package:summit2/screens/rewards_screen.dart';
@@ -9,10 +11,10 @@ import 'package:summit2/screens/signup_screen.dart';
 import 'package:summit2/screens/todo/task_screen.dart';
 import 'package:summit2/screens/todo/todo_home.dart';
 import 'package:summit2/screens/welcome_screen.dart';
+
 import 'screens/calendar/calendar_screen.dart';
 import 'screens/progress_screen.dart';
 import 'screens/rewards_screen.dart';
-import 'package:summit2/models/calendar/calendar_event_data.dart';
 
 void main() {
   runApp(MyApp());
@@ -26,6 +28,9 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (context) => CategoryData(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => TaskData(),
         ),
         ChangeNotifierProvider(
           create: (context) => EventData(),
