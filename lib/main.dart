@@ -12,6 +12,7 @@ import 'package:summit2/screens/welcome_screen.dart';
 import 'screens/calendar/calendar_screen.dart';
 import 'screens/progress_screen.dart';
 import 'screens/rewards_screen.dart';
+import 'package:summit2/models/calendar/calendar_event_data.dart';
 
 void main() {
   runApp(MyApp());
@@ -21,9 +22,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      //CategoryData
-      create: (context) => CategoryData(),
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => CategoryData(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => EventData(),
+        )
+      ],
       child: MaterialApp(
         theme: ThemeData(
           backgroundColor: Colors.white,

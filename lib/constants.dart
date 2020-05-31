@@ -42,6 +42,22 @@ const kToDoHomeTextStyle = TextStyle(
   fontWeight: FontWeight.bold,
 );
 
+const kEventTextStyle = TextStyle(
+  color: kDarkBlueGrey,
+  fontSize: 18.0,
+  fontWeight: FontWeight.bold,
+);
+
+const kEventDateTextStyle = TextStyle(
+  color: kDarkBlueGrey,
+  fontSize: 14.0,
+);
+
+const kCalendarHeaderStyle = TextStyle(
+  color: kDarkBlueGrey,
+  fontWeight: FontWeight.bold,
+);
+
 const List<String> kListScreens = [
   TodoHome.id,
   CalendarScreen.id,
