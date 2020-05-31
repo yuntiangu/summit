@@ -1,8 +1,8 @@
-#Team name: doIt()
+# Team name: doIt()
 
-##Level of Achievement: Apollo 11
+## Level of Achievement: Apollo 11
 
-###Project Description: 
+### Project Description: 
 
 Summit is a productivity app. It is a Tasker that helps us manage our tasks. Specifically, the purpose of Summit is to have a seamless integration between the application and LumiNUS platform. This is accomplished through having our application be built on the Flutter framework, which will conveniently cater to both Android and iOS users.
 
@@ -41,22 +41,22 @@ Problem Statement:
 Most planner apps do not include features to encourage us to remain productive
 
 
-##Our Solution: 
+## Our Solution: 
 
 We created a planner app which includes a calendar and to-do list. Our app would be integrated with LumiNUS, allowing for lectures and tutorial timeslots to be displayed on the calendar. The quizzes and homework would be displayed in our to-do list. 
 We would be including a simple gamification feature into our app. There will be a page which tracks the user’s progress for each module, showing the percentage of tasks they have completed for that module. This serves to be a reality check for the user, ensuring that they do not lag behind in any modules. 
 Additionally, we have a rewards system, whereby as the user completes tasks, he would be able to win new app icons.
 
-##Tech Stack:
+## Tech Stack:
 
 -Flutter
 -FireBase
 -LumiNUS API
 -Git
--[**UI/UX Prototype: **](https://drive.google.com/file/d/1QaSjk1qGhQfM8YVW1si3e7FY4kyx8elP/view?usp=sharing)
+-[UI/UX Prototype](https://drive.google.com/file/d/1QaSjk1qGhQfM8YVW1si3e7FY4kyx8elP/view?usp=sharing)
 
-[**Milestone 1 App Walkthrough: **](https://youtu.be/Ih9LIYMVL5k)
+[Milestone 1 App Walkthrough](https://youtu.be/Ih9LIYMVL5k)
 
-[**UX Program Flow: **](https://drive.google.com/file/d/17OUUayTRPn0P3Pa_KmxGoqzXls1L8SR3/view)
+[UX Program Flow](https://drive.google.com/file/d/17OUUayTRPn0P3Pa_KmxGoqzXls1L8SR3/view)
 
-[**Poster Link:**](https://docs.google.com/presentation/d/1n6n6FBOJjyZbyPo2389HsmWM8EyCu0vq77wNdqc_Vkw/edit?usp=sharing)
+[Poster Link](https://docs.google.com/presentation/d/1n6n6FBOJjyZbyPo2389HsmWM8EyCu0vq77wNdqc_Vkw/edit?usp=sharing)
