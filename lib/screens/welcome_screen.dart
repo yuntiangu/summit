@@ -6,7 +6,7 @@ import 'login_screen.dart';
 import 'signup_screen.dart';
 
 class WelcomeScreen extends StatefulWidget {
-  static String id = 'home_screen';
+  static const String id = 'welcome_screen';
 
   @override
   _WelcomeScreenState createState() => _WelcomeScreenState();
@@ -23,13 +23,8 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
-                Hero(
-                  tag: 'msytic',
-                  child: Container(
-                    child: Image(
-                      image: AssetImage('images/logoMystic.png'),
-                    ),
-                  ),
+                Image(
+                  image: AssetImage('images/logoMystic.png'),
                 ),
                 SizedBox(
                   height: 20.0,

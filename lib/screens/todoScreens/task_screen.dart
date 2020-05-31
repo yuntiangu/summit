@@ -8,10 +8,9 @@ import 'package:summit2/models/task/todo_task_data.dart';
 import 'add_task_screen.dart';
 
 class TaskScreen extends StatelessWidget {
-  static String id = 'todo_task_screen';
-
-  final String whichCategory;
-  TaskScreen(this.whichCategory);
+  String _title;
+  TaskScreen(this._title);
+  static const String id = 'todo_task_screen';
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +22,7 @@ class TaskScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0.0,
         title: Text(
-          whichCategory,
+          _title,
           style: kHeaderTextStyle,
         ),
       ),
@@ -53,7 +52,7 @@ class TaskScreen extends StatelessWidget {
                     topLeft: Radius.circular(20.0),
                     topRight: Radius.circular(20.0),
                   )),
-              child: TasksList(whichCategory),
+              child: TasksList(),
             ),
           ),
         ],

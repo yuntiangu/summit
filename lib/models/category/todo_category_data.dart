@@ -16,7 +16,7 @@ class CategoryData extends ChangeNotifier {
   }
 
   void addCategory(String newCategory) {
-    _categories.add(CategoryBox(newCategory, TasksList(newCategory)));
+    _categories.add(CategoryBox(newCategory, TasksList()));
     notifyListeners();
     print('addCat() called');
   }

@@ -6,7 +6,7 @@ import 'package:summit2/constants.dart';
 import 'package:summit2/screens/todoScreens/todo_home.dart';
 
 class SignupScreen extends StatefulWidget {
-  static String id = 'signup_screen';
+  static const String id = 'signup_screen';
 
   @override
   _SignupScreenState createState() => _SignupScreenState();

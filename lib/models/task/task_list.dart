@@ -5,9 +5,6 @@ import 'package:summit2/models/task/todo_task_data.dart';
 import 'task_tile.dart';
 
 class TasksList extends StatelessWidget {
-  final String whichCategory;
-  TasksList(this.whichCategory);
-
   @override
   Widget build(BuildContext context) {
     return Consumer<TaskData>(

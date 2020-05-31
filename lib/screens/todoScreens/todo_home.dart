@@ -6,7 +6,7 @@ import 'package:summit2/models/category/category_list.dart';
 import 'add_category_screen.dart';
 
 class TodoHome extends StatelessWidget {
-  static String id = 'todo_home';
+  static const String id = 'todo_home';
 
   @override
   Widget build(BuildContext context) {

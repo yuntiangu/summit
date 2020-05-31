@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:summit2/screens/todoScreens/todo_home.dart';
+
+import 'screens/calendar/calendar_screen.dart';
+import 'screens/progress_screen.dart';
+import 'screens/rewards_screen.dart';
 
 const kHomeBackgroundColor = Color(0xff32465f);
 const kDarkBlueGrey = Color(0xff2D3F54);
@@ -36,3 +41,26 @@ const kToDoHomeTextStyle = TextStyle(
   fontSize: 20.0,
   fontWeight: FontWeight.bold,
 );
+
+const kEventTextStyle = TextStyle(
+  color: kDarkBlueGrey,
+  fontSize: 18.0,
+  fontWeight: FontWeight.bold,
+);
+
+const kEventDateTextStyle = TextStyle(
+  color: kDarkBlueGrey,
+  fontSize: 14.0,
+);
+
+const kCalendarHeaderStyle = TextStyle(
+  color: kDarkBlueGrey,
+  fontWeight: FontWeight.bold,
+);
+
+const List<String> kListScreens = [
+  TodoHome.id,
+  CalendarScreen.id,
+  ProgressScreen.id,
+  RewardScreen.id,
+];
