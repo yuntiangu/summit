@@ -2,12 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:summit2/constants.dart';
 import 'package:summit2/components/bottom_bar.dart';
 import 'package:summit2/models/calendar/calendar_event_data.dart';
-import 'package:summit2/models/calendar/event_tile.dart';
 import 'package:summit2/screens/calendar/add_calendar_screen.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:summit2/components/add_fab.dart';
 import 'package:summit2/models/calendar/event_list.dart';
-import 'package:intl/intl.dart';
 
 class CalendarScreen extends StatefulWidget {
   static const String id = 'calendar_screen';

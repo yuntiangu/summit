@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
-import 'package:intl/intl.dart';
 import 'package:summit2/models/calendar/calendar_event.dart';
 
 import 'dart:collection';
