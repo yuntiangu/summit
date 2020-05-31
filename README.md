@@ -6,27 +6,15 @@
 
 Summit is a productivity app. It is a Tasker that helps us manage our tasks. Specifically, the purpose of Summit is to have a seamless integration between the application and LumiNUS platform. This is accomplished through having our application be built on the Flutter framework, which will conveniently cater to both Android and iOS users.
 
-
-
 Our current phase (Phase 1), is to familiarise ourselves with the Flutter framework, setting up Firebase as our cloud database and online authentication for our users, and finalising our mockups while creating the skeletons for the application (To-Do List and Calendar Page).
-
-
 
 Our next phase (Phase 2), would be focused on improving the back-end of our application. Firstly, we would ensure that each user’s tasks and events are stored within firebase. Thereafter, we would implement a notifications system to remind users of their upcoming events and tasks due dates. We would then integrate our application with each student’s LumiNUS data. This would include our app sending notifications in-sync with LumiNUS’ announcements and Task Due Countdown Timer.  Phase 2 will also entail the app having capabilities to track a user’s progress in task completion.
 
-
-
 The final phase (Phase 3) outline would be working on the gamification side of our app, whereby the users would receive new app icons on each milestone of task completed as rewards for their consistency and hard work. Thereafter, we would improve the entire UI of our app, including the addition of animations for a smoother app experience. 
-
-
 
 For our Source Code Control System, we would be using Git.
 
-
-
 +++++++++++++
-
-
 
 Aim: To create an application to improve the productivity levels of NUS students.
 
@@ -53,7 +41,8 @@ Additionally, we have a rewards system, whereby as the user completes tasks, he 
 -FireBase
 -LumiNUS API
 -Git
--[UI/UX Prototype](https://drive.google.com/file/d/1QaSjk1qGhQfM8YVW1si3e7FY4kyx8elP/view?usp=sharing)
+
+[UI/UX Prototype](https://drive.google.com/file/d/1QaSjk1qGhQfM8YVW1si3e7FY4kyx8elP/view?usp=sharing)
 
 [Milestone 1 App Walkthrough](https://youtu.be/Ih9LIYMVL5k)
 
