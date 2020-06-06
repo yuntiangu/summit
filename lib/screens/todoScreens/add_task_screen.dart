@@ -3,9 +3,16 @@ import 'package:provider/provider.dart';
 import 'package:summit2/components/RoundedButton.dart';
 import 'package:summit2/constants.dart';
 import 'package:summit2/models/task/todo_task_data.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+
+final databaseReference = Firestore.instance;
+final _auth = FirebaseAuth.instance;
 
 class AddTaskScreen extends StatelessWidget {
   static String newTaskTitle;
+  String _title;
+  AddTaskScreen(this._title);
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +55,7 @@ class AddTaskScreen extends StatelessWidget {
                 title: 'Add',
                 onPressed: () {
                   Provider.of<TaskData>(context, listen: false)
-                      .addTask(newTaskTitle);
+                      .addTask(_title, newTaskTitle);
                   Navigator.pop(context);
                 },
               ),
@@ -58,4 +65,15 @@ class AddTaskScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+void updateTask(String categoryTitle, TaskData taskData) async {
+  final FirebaseUser user = await _auth.currentUser();
+  final email = user.email;
+  await databaseReference
+      .collection('user')
+      .document(email)
+      .collection('to do')
+      .document(categoryTitle)
+      .setData({'task': taskData});
 }

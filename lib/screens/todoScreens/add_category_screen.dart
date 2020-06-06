@@ -3,6 +3,11 @@ import 'package:provider/provider.dart';
 import 'package:summit2/components/RoundedButton.dart';
 import 'package:summit2/constants.dart';
 import 'package:summit2/models/category/todo_category_data.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+final databaseReference = Firestore.instance;
+final _auth = FirebaseAuth.instance;
 
 class AddCategoryScreen extends StatelessWidget {
   static String newCategoryTitle;
@@ -50,6 +55,7 @@ class AddCategoryScreen extends StatelessWidget {
                   Provider.of<CategoryData>(context, listen: false)
                       .addCategory(newCategoryTitle);
                   Navigator.pop(context);
+                  createCategory(newCategoryTitle);
                 },
               ),
             ),
@@ -58,4 +64,15 @@ class AddCategoryScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+void createCategory(String newCategoryTitle) async {
+  final FirebaseUser user = await _auth.currentUser();
+  final email = user.email;
+  await databaseReference
+      .collection('user')
+      .document(email)
+      .collection('to do')
+      .document(newCategoryTitle)
+      .setData({'task': null});
 }

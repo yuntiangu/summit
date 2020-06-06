@@ -13,8 +13,8 @@ class TaskData extends ChangeNotifier {
     return _tasks.length;
   }
 
-  void addTask(String newTaskTitle) {
-    final task = Task(name: newTaskTitle);
+  void addTask(String newCategoryName, String newTaskTitle) {
+    final task = Task(categoryName: newCategoryName, name: newTaskTitle);
     _tasks.add(task);
     notifyListeners();
   }
