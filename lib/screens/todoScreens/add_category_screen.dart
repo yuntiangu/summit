@@ -8,6 +8,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 
 final databaseReference = Firestore.instance;
 final _auth = FirebaseAuth.instance;
+int count = 0;
 
 class AddCategoryScreen extends StatelessWidget {
   static String newCategoryTitle;
@@ -52,10 +53,10 @@ class AddCategoryScreen extends StatelessWidget {
                 textColour: kGrey,
                 title: 'Add',
                 onPressed: () {
+                  count++;
                   Provider.of<CategoryData>(context, listen: false)
                       .addCategory(newCategoryTitle);
                   Navigator.pop(context);
-                  createCategory(newCategoryTitle);
                 },
               ),
             ),
@@ -66,13 +67,3 @@ class AddCategoryScreen extends StatelessWidget {
   }
 }
 
-void createCategory(String newCategoryTitle) async {
-  final FirebaseUser user = await _auth.currentUser();
-  final email = user.email;
-  await databaseReference
-      .collection('user')
-      .document(email)
-      .collection('to do')
-      .document(newCategoryTitle)
-      .setData({'task': null});
-}
