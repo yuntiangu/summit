@@ -7,30 +7,31 @@ import 'package:firebase_auth/firebase_auth.dart';
 final databaseReference = Firestore.instance;
 final _auth = FirebaseAuth.instance;
 
-void getTaskData(List<Task> listTasks) async {
-  List<Task> _tasks = [];
-  FirebaseUser user = await _auth.currentUser();
-  String email = user.email;
-  databaseReference
-      .collection('user')
-      .document(email)
-      .collection('to do')
-      .snapshots()
-      .listen((event) {
-        event.documentChanges.forEach((element) {
-          if (element.type == DocumentChangeType.added) {
-            var data = element.document.data;
-            print(data);
-            Task task = Task(categoryName: data['category title'], name: data['task title']);
-            listTasks.add(task);
-          }
-        });
-  });
-}
-
-
 class TaskData extends ChangeNotifier {
   List<Task> _tasks = [];
+
+  void getTaskData(List<Task> listTasks) async {
+    List<Task> _tasks = [];
+    FirebaseUser user = await _auth.currentUser();
+    String email = user.email;
+    databaseReference
+        .collection('user')
+        .document(email)
+        .collection('to do')
+        .snapshots()
+        .listen((event) {
+      event.documentChanges.forEach((element) {
+        if (element.type == DocumentChangeType.added) {
+          var data = element.document.data;
+          print(data);
+          Task task = Task(categoryName: data['category title'], name: data['task title']);
+          listTasks.add(task);
+        }
+      });
+    });
+    notifyListeners();
+  }
+
   TaskData(){
     getTaskData(_tasks);
   }
