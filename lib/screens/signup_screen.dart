@@ -31,10 +31,8 @@ class _SignupScreenState extends State<SignupScreen> {
             children: <Widget>[
               Padding(
                 padding: const EdgeInsets.all(20.0),
-                child: Flexible(
-                  child: Container(
-                    child: Image.asset('images/logoBlue.png'),
-                  ),
+                child: Container(
+                  child: Image.asset('images/logoBlue.png'),
                 ),
               ),
               TextField(

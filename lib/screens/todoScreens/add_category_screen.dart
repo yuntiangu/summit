@@ -4,10 +4,8 @@ import 'package:summit2/components/RoundedButton.dart';
 import 'package:summit2/constants.dart';
 import 'package:summit2/models/category/todo_category_data.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 final databaseReference = Firestore.instance;
-final _auth = FirebaseAuth.instance;
 int count = 0;
 
 class AddCategoryScreen extends StatelessWidget {

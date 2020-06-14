@@ -5,6 +5,7 @@ class CategoryBox extends StatelessWidget {
   TasksList _tasksList;
   final String name;
   bool isDone;
+
   CategoryBox(this.name, this._tasksList);
 
   @override

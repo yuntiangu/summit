@@ -18,6 +18,9 @@ class TasksList extends StatelessWidget {
             if (task.categoryName != _categoryName) {
               return SizedBox(height: 0.0,);
             }
+            else if (task.name == null) {
+              return SizedBox(height: 0.0,);
+            }
             return TaskTile(
               taskTitle: task.name,
               isChecked: task.isDone,

@@ -10,7 +10,7 @@ final databaseReference = Firestore.instance;
 final _auth = FirebaseAuth.instance;
 
 void getCategoryData(List<CategoryBox> listCategories) async {
-  List<CategoryBox> _categories = [];
+  print('debug');
   List<String> _categoryNames = [];
   FirebaseUser user = await _auth.currentUser();
   String email = user.email;
@@ -23,7 +23,7 @@ void getCategoryData(List<CategoryBox> listCategories) async {
     event.documentChanges.forEach((element) {
       if (element.type == DocumentChangeType.added) {
         var data = element.document.data;
-        print(data);
+        //print(data);
         String categoryName = data['category title'];
         if (!_categoryNames.contains(categoryName)) {
           _categoryNames.add(categoryName);
@@ -49,10 +49,18 @@ class CategoryData extends ChangeNotifier {
     return _categories.length;
   }
 
-  void addCategory(String newCategory) {
-    _categories.add(CategoryBox(newCategory, TasksList(newCategory)));
+  void addCategory(String newCategory) async {
+    final FirebaseUser user = await _auth.currentUser();
+    final email = user.email;
+    await databaseReference
+        .collection('user')
+        .document(email)
+        .collection('to do')
+        .add({
+      "category title": newCategory,
+      "task title": null,
+    });
     notifyListeners();
-    print('addCat() called');
   }
 
   void deleteCategory(CategoryBox categoryBox) {

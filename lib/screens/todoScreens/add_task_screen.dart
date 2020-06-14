@@ -1,16 +1,11 @@
-import 'dart:collection';
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:summit2/components/RoundedButton.dart';
 import 'package:summit2/constants.dart';
-import 'package:summit2/models/task/todo_task.dart';
 import 'package:summit2/models/task/todo_task_data.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 final databaseReference = Firestore.instance;
-final _auth = FirebaseAuth.instance;
 
 class AddTaskScreen extends StatelessWidget {
   static String newTaskTitle;
@@ -57,10 +52,9 @@ class AddTaskScreen extends StatelessWidget {
                 textColour: kGrey,
                 title: 'Add',
                 onPressed: () {
-                  //Provider.of<TaskData>(context, listen: false)
-                  //    .addTask(_title, newTaskTitle);
+                  Provider.of<TaskData>(context, listen: false)
+                      .addTaskFirestore(_title, newTaskTitle);
                   Navigator.pop(context);
-                  addTaskFirestore(_title, newTaskTitle);
                 },
               ),
             ),
@@ -71,16 +65,4 @@ class AddTaskScreen extends StatelessWidget {
   }
 }
 
-void addTaskFirestore(String categoryTitle, String taskTitle) async {
-  final FirebaseUser user = await _auth.currentUser();
-  final email = user.email;
-  final task = Task(categoryName: categoryTitle, name: taskTitle);
-  await databaseReference
-      .collection('user')
-      .document(email)
-      .collection('to do')
-      .add({
-    "category title": categoryTitle,
-    "task title": taskTitle,
-  });
-}
+

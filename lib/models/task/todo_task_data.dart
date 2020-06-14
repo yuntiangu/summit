@@ -42,9 +42,18 @@ class TaskData extends ChangeNotifier {
     return _tasks.length;
   }
 
-  void addTask(String newCategoryName, String newTaskTitle) {
-    final task = Task(categoryName: newCategoryName, name: newTaskTitle);
-    _tasks.add(task);
+  void addTaskFirestore(String categoryTitle, String taskTitle) async {
+    final FirebaseUser user = await _auth.currentUser();
+    final email = user.email;
+    final task = Task(categoryName: categoryTitle, name: taskTitle);
+    await databaseReference
+        .collection('user')
+        .document(email)
+        .collection('to do')
+        .add({
+      "category title": categoryTitle,
+      "task title": taskTitle,
+    });
     notifyListeners();
   }
 

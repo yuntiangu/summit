@@ -28,7 +28,7 @@ class TodoHome extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
-            CategoryList(),
+            Expanded(child: CategoryList()),
             Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 30.0, vertical: 10.0),
