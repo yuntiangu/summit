@@ -8,6 +8,7 @@ class CategoryList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Consumer<CategoryData>(builder: (context, categoryData, child) {
+      print('${categoryData.categories} better work now');
       return ListView.builder(
         scrollDirection: Axis.vertical,
         shrinkWrap: true,

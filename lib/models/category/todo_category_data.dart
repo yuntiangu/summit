@@ -12,13 +12,17 @@ final databaseReference = Firestore.instance;
 class CategoryData extends ChangeNotifier {
   List<CategoryBox> _categories = [];
 
+  CategoryData() {
+    getCategoryData(_categories);
+  }
+
   void getCategoryData(List<CategoryBox> listCategories) async {
     print('debug');
     List<String> _categoryNames = [];
     FirebaseUser user = await _auth.currentUser();
     String email = user.email;
     print(email);
-    await databaseReference
+    databaseReference
         .collection('user')
         .document(email)
         .collection('to do')
@@ -29,21 +33,17 @@ class CategoryData extends ChangeNotifier {
         var data = element.data;
         print(data);
         String categoryName = data['category title'];
+        print(data['category title']);
         if (!_categoryNames.contains(categoryName)) {
           _categoryNames.add(categoryName);
           CategoryBox category =
           CategoryBox(categoryName, TasksList(categoryName));
           listCategories.add(category);
-          print(listCategories);
         }
       });
     });
     notifyListeners();
-    print('$listCategories done');
-  }
 
-  CategoryData() {
-    getCategoryData(_categories);
   }
 
   UnmodifiableListView<CategoryBox> get categories {
@@ -63,6 +63,7 @@ class CategoryData extends ChangeNotifier {
         .collection('to do')
         .add({
       "category title": newCategory,
+      "done": null,
       "task title": null,
     });
     notifyListeners();
