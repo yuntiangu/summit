@@ -31,9 +31,7 @@ class CategoryData extends ChangeNotifier {
       event.documents.forEach((element) {
         print(element);
         var data = element.data;
-        print(data);
         String categoryName = data['category title'];
-        print(data['category title']);
         if (!_categoryNames.contains(categoryName)) {
           _categoryNames.add(categoryName);
           CategoryBox category =
@@ -43,7 +41,6 @@ class CategoryData extends ChangeNotifier {
       });
     });
     notifyListeners();
-
   }
 
   UnmodifiableListView<CategoryBox> get categories {
@@ -69,8 +66,8 @@ class CategoryData extends ChangeNotifier {
     notifyListeners();
   }
 
-  void deleteCategory(CategoryBox categoryBox) {
-    _categories.remove(categoryBox);
-    notifyListeners();
-  }
+//  void deleteCategory(CategoryBox categoryBox) {
+//    _categories.remove(categoryBox);
+//    notifyListeners();
+//  }
 }

@@ -12,7 +12,6 @@ class TasksList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Consumer<TaskData>(
       builder: (context, taskData, child) {
-        print('${taskData.tasks} check task list');
         return ListView.builder(
           itemBuilder: (context, index) {
             final task = taskData.tasks[index];
