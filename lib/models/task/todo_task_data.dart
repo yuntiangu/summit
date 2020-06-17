@@ -27,11 +27,12 @@ class TaskData extends ChangeNotifier {
       event.documentChanges.forEach((element) {
         if (element.type == DocumentChangeType.added) {
           var data = element.document.data;
-          print(data);
+          //print(data);
           Task task = Task(
               taskID: data['id'],
               categoryName: data['category title'],
               name: data['task title'],
+              dueDateTime: data['due date time'] == null ? null : data['due date time'].toDate(),
               isDone: data['done']);
           listTasks.add(task);
         }
@@ -48,23 +49,10 @@ class TaskData extends ChangeNotifier {
     return _tasks.length;
   }
 
-  void addTaskFirestore(String categoryTitle, String taskTitle) async {
+  void addTaskFirestore(String categoryTitle, String taskTitle, DateTime dueDateTime) async {
     print('$count');
     final FirebaseUser user = await _auth.currentUser();
     final email = user.email;
-    //final task =
-    //    Task(taskID: count, categoryName: categoryTitle, name: taskTitle);
-//    await databaseReference
-//        .collection('user')
-//        .document(email)
-//        .collection('to do')
-//        //.document('task $count')
-//        .add({
-//      "category title": categoryTitle,
-//      "task title": taskTitle,
-//      "done": false,
-//    });
-
     DocumentReference docRef = await databaseReference
         .collection('user')
         .document(email)
@@ -74,6 +62,7 @@ class TaskData extends ChangeNotifier {
       "id": docRef.documentID,
       "category title": categoryTitle,
       "task title": taskTitle,
+      "due date time": dueDateTime == null ? null : Timestamp.fromDate(dueDateTime),
       "done": false,
     });
     notifyListeners();

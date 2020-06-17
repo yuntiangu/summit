@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class TaskTile extends StatelessWidget {
   final bool isChecked;
   final String taskTitle;
+  final DateTime dueDateTime;
   final Function checkboxCallback;
   final Function longPressCallBack;
 
-  TaskTile({this.isChecked, this.taskTitle, this.checkboxCallback, this.longPressCallBack});
+  TaskTile({this.isChecked, this.taskTitle, this.dueDateTime, this.checkboxCallback, this.longPressCallBack});
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +20,7 @@ class TaskTile extends StatelessWidget {
           decoration: isChecked ? TextDecoration.lineThrough : null,
         ),
       ),
+      subtitle: dueDateTime != null ? Text('Due: ${DateFormat.MMMMd('en_US').add_jm().format(dueDateTime)}') : null,
       trailing: Checkbox(
         activeColor: Colors.lightBlueAccent,
         value: isChecked,

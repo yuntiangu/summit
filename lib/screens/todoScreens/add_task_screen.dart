@@ -1,4 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:summit2/components/RoundedButton.dart';
 import 'package:summit2/constants.dart';
@@ -7,10 +10,26 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 final databaseReference = Firestore.instance;
 
-class AddTaskScreen extends StatelessWidget {
-  static String newTaskTitle;
+class AddTaskScreen extends StatefulWidget {
   String _title;
   AddTaskScreen(this._title);
+
+  @override
+  _AddTaskScreenState createState() => _AddTaskScreenState();
+}
+
+class _AddTaskScreenState extends State<AddTaskScreen> {
+  static String newTaskTitle;
+  static DateTime newDueDateTime;
+  static String dueDateTimeString;
+
+  @override
+  void initState() {
+    newTaskTitle = null;
+    newDueDateTime = null;
+    dueDateTimeString = "Set Due Date and Time";
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +63,37 @@ class AddTaskScreen extends StatelessWidget {
                 newTaskTitle = newText;
               },
             ),
+            FlatButton(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5.0)),
+              onPressed: () {
+                DatePicker.showDateTimePicker(context,
+                    theme: DatePickerTheme(
+                      containerHeight:
+                          MediaQuery.of(context).copyWith().size.height / 3,
+                    ),
+                    showTitleActions: true,
+                    minTime: DateTime(2019, 1, 1),
+                    onConfirm: (dateTime) {
+                      print('confirm $dateTime');
+                      setState(() {
+                        dueDateTimeString = '${DateFormat.MMMMd('en_US').add_jm().format(dateTime)}';
+                      });
+                      newDueDateTime = dateTime;
+                    },
+                    currentTime: DateTime.now(),
+                    locale: LocaleType.en,
+                );
+              },
+              child: Container(
+                child: Text(
+                  " $dueDateTimeString",
+                  style: TextStyle(
+                    color: kDarkBlueGrey,
+                  ),
+                ),
+              ),
+            ),
             Padding(
               padding:
                   const EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
@@ -53,7 +103,7 @@ class AddTaskScreen extends StatelessWidget {
                 title: 'Add',
                 onPressed: () {
                   Provider.of<TaskData>(context, listen: false)
-                      .addTaskFirestore(_title, newTaskTitle);
+                      .addTaskFirestore(widget._title, newTaskTitle, newDueDateTime);
                   Navigator.pop(context);
                 },
               ),
@@ -64,5 +114,3 @@ class AddTaskScreen extends StatelessWidget {
     );
   }
 }
-
-
