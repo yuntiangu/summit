@@ -22,12 +22,16 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
   static String newTaskTitle;
   static DateTime newDueDateTime;
   static String dueDateTimeString;
+  static DateTime newReminderDateTime;
+  static String reminderDateTimeString;
 
   @override
   void initState() {
     newTaskTitle = null;
     newDueDateTime = null;
     dueDateTimeString = "Set Due Date and Time";
+    newReminderDateTime = null;
+    reminderDateTimeString = "Set Reminder Date and Time";
     super.initState();
   }
 
@@ -94,6 +98,37 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 ),
               ),
             ),
+            FlatButton(
+              shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(5.0)),
+              onPressed: () {
+                DatePicker.showDateTimePicker(context,
+                  theme: DatePickerTheme(
+                    containerHeight:
+                    MediaQuery.of(context).copyWith().size.height / 3,
+                  ),
+                  showTitleActions: true,
+                  minTime: DateTime(2019, 1, 1),
+                  onConfirm: (dateTime) {
+                    print('confirm $dateTime');
+                    setState(() {
+                      reminderDateTimeString = '${DateFormat.MMMMd('en_US').add_jm().format(dateTime)}';
+                    });
+                    newReminderDateTime = dateTime;
+                  },
+                  currentTime: DateTime.now(),
+                  locale: LocaleType.en,
+                );
+              },
+              child: Container(
+                child: Text(
+                  " $reminderDateTimeString",
+                  style: TextStyle(
+                    color: kDarkBlueGrey,
+                  ),
+                ),
+              ),
+            ),
             Padding(
               padding:
                   const EdgeInsets.symmetric(vertical: 20.0, horizontal: 50.0),
@@ -103,7 +138,7 @@ class _AddTaskScreenState extends State<AddTaskScreen> {
                 title: 'Add',
                 onPressed: () {
                   Provider.of<TaskData>(context, listen: false)
-                      .addTaskFirestore(widget._title, newTaskTitle, newDueDateTime);
+                      .addTaskFirestore(widget._title, newTaskTitle, newDueDateTime, newReminderDateTime);
                   Navigator.pop(context);
                 },
               ),

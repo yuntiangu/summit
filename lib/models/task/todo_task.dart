@@ -5,6 +5,7 @@ class Task {
   final String categoryName;
   final String name;
   final DateTime dueDateTime;
+  final DateTime reminderDateTime;
   bool isDone;
 
   Task({
@@ -12,6 +13,7 @@ class Task {
     @required this.categoryName,
     @required this.name,
     this.dueDateTime,
+    this.reminderDateTime,
     this.isDone = false,
   });
 

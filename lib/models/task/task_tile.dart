@@ -5,10 +5,17 @@ class TaskTile extends StatelessWidget {
   final bool isChecked;
   final String taskTitle;
   final DateTime dueDateTime;
+  final DateTime reminderDateTime;
   final Function checkboxCallback;
   final Function longPressCallBack;
 
-  TaskTile({this.isChecked, this.taskTitle, this.dueDateTime, this.checkboxCallback, this.longPressCallBack});
+  TaskTile(
+      {this.isChecked,
+      this.taskTitle,
+      this.dueDateTime,
+      this.reminderDateTime,
+      this.checkboxCallback,
+      this.longPressCallBack});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +27,18 @@ class TaskTile extends StatelessWidget {
           decoration: isChecked ? TextDecoration.lineThrough : null,
         ),
       ),
-      subtitle: dueDateTime != null ? Text('Due: ${DateFormat.MMMMd('en_US').add_jm().format(dueDateTime)}') : null,
+      subtitle: dueDateTime == null && reminderDateTime == null
+          ? null
+          : reminderDateTime == null
+              ? Text(
+                  'Due: ${DateFormat.MMMMd('en_US').add_jm().format(dueDateTime)}')
+              : dueDateTime == null
+                  ? Text(
+                      'Reminder: ${DateFormat.MMMMd('en_US').add_jm().format(reminderDateTime)}')
+                  : Text(
+                      'Due: ${DateFormat.MMMMd('en_US').add_jm().format(dueDateTime)} \nReminder: ${DateFormat.MMMMd('en_US').add_jm().format(reminderDateTime)}'),
+      isThreeLine:
+          (reminderDateTime == null && dueDateTime == null) ? false : true,
       trailing: Checkbox(
         activeColor: Colors.lightBlueAccent,
         value: isChecked,
@@ -29,8 +47,3 @@ class TaskTile extends StatelessWidget {
     );
   }
 }
-
-
-
-
-

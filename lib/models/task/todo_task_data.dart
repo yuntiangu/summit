@@ -33,6 +33,7 @@ class TaskData extends ChangeNotifier {
               categoryName: data['category title'],
               name: data['task title'],
               dueDateTime: data['due date time'] == null ? null : data['due date time'].toDate(),
+              reminderDateTime: data['reminder date time'] == null ? null : data['reminder date time'].toDate(),
               isDone: data['done']);
           listTasks.add(task);
         }
@@ -49,7 +50,7 @@ class TaskData extends ChangeNotifier {
     return _tasks.length;
   }
 
-  void addTaskFirestore(String categoryTitle, String taskTitle, DateTime dueDateTime) async {
+  void addTaskFirestore(String categoryTitle, String taskTitle, DateTime dueDateTime, DateTime reminderDateTime) async {
     print('$count');
     final FirebaseUser user = await _auth.currentUser();
     final email = user.email;
@@ -63,6 +64,7 @@ class TaskData extends ChangeNotifier {
       "category title": categoryTitle,
       "task title": taskTitle,
       "due date time": dueDateTime == null ? null : Timestamp.fromDate(dueDateTime),
+      "reminder date time": reminderDateTime == null ? null : Timestamp.fromDate(reminderDateTime),
       "done": false,
     });
     notifyListeners();
