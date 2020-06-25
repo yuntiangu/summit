@@ -1,8 +1,10 @@
-import 'package:flutter/foundation.dart';
-import 'todo_task.dart';
 import 'dart:collection';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
+
+import 'todo_task.dart';
 
 final databaseReference = Firestore.instance;
 final _auth = FirebaseAuth.instance;
@@ -52,19 +54,6 @@ class TaskData extends ChangeNotifier {
     print('$count');
     final FirebaseUser user = await _auth.currentUser();
     final email = user.email;
-    //final task =
-    //    Task(taskID: count, categoryName: categoryTitle, name: taskTitle);
-//    await databaseReference
-//        .collection('user')
-//        .document(email)
-//        .collection('to do')
-//        //.document('task $count')
-//        .add({
-//      "category title": categoryTitle,
-//      "task title": taskTitle,
-//      "done": false,
-//    });
-
     DocumentReference docRef = await databaseReference
         .collection('user')
         .document(email)

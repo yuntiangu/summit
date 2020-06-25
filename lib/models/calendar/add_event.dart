@@ -1,7 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:summit2/constants.dart';
 import 'package:summit2/models/calendar/event.dart';
 
-import 'event_firestore_service.dart';
+FirebaseAuth _auth = FirebaseAuth.instance;
+Firestore _firestore = Firestore.instance;
 
 class AddEventPage extends StatefulWidget {
   static const id = 'addEventPageId';
@@ -14,13 +18,37 @@ class AddEventPage extends StatefulWidget {
 }
 
 class _AddEventPageState extends State<AddEventPage> {
-  TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
+//  TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
+  TextStyle style = kEventTextStyle;
   TextEditingController _title;
   TextEditingController _description;
   DateTime _eventDate;
   final _formKey = GlobalKey<FormState>();
   final _key = GlobalKey<ScaffoldState>();
   bool processing;
+  String email;
+  DocumentReference docRef;
+
+  Future<String> getEmail() async {
+    FirebaseUser user = await _auth.currentUser();
+    return user.email;
+  }
+
+  Future<void> addFirestoreEvent() async {
+    final FirebaseUser user = await _auth.currentUser();
+    final email = user.email;
+    DocumentReference docRef = await _firestore
+        .collection('user')
+        .document(email)
+        .collection('events')
+        .document();
+    docRef.setData({
+      "id": docRef.documentID,
+      "title": _title.text,
+      "description": _description.text,
+      "event_date": _eventDate,
+    });
+  }
 
   @override
   void initState() {
@@ -31,6 +59,7 @@ class _AddEventPageState extends State<AddEventPage> {
         text: widget.note != null ? widget.note.description : "");
     _eventDate = DateTime.now();
     processing = false;
+    getEmail().then((value) => this.email = value);
   }
 
   @override
@@ -112,17 +141,18 @@ class _AddEventPageState extends State<AddEventPage> {
                                 processing = true;
                               });
                               if (widget.note != null) {
-                                await eventDBS.updateData(widget.note.id, {
-                                  "title": _title.text,
-                                  "description": _description.text,
-                                  "event_date": widget.note.eventDate,
-                                });
+//                                await eventDBS.updateData(widget.note.id, {
+//                                  "title": _title.text,
+//                                  "description": _description.text,
+//                                  "event_date": widget.note.eventDate,
+//                                });
                               } else {
-                                await eventDBS.createItem(EventModel(
-                                  title: _title.text,
-                                  description: _description.text,
-                                  eventDate: _eventDate,
-                                ));
+                                await addFirestoreEvent();
+//                                await eventDBS.createItem(EventModel(
+//                                  title: _title.text,
+//                                  description: _description.text,
+//                                  eventDate: _eventDate,
+//                                ));
                               }
                               Navigator.pop(context);
                               setState(() {

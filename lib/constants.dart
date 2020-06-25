@@ -64,3 +64,7 @@ const List<String> kListScreens = [
   ProgressScreen.id,
   RewardScreen.id,
 ];
+
+const CircleBorder kTodayBorder = CircleBorder(
+  side: BorderSide(width: 1.0, color: Colors.red),
+);

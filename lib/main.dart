@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:summit2/constants.dart';
 import 'package:summit2/models/calendar/add_event.dart';
 import 'package:summit2/models/calendar/calendar_event_data.dart';
+import 'package:summit2/models/calendar/edit_event_screen.dart';
 import 'package:summit2/models/category/todo_category_data.dart';
 import 'package:summit2/screens/login_screen.dart';
 import 'package:summit2/screens/progress_screen.dart';
@@ -16,8 +18,8 @@ import 'screens/calendar/calendar_screen.dart';
 import 'screens/progress_screen.dart';
 import 'screens/rewards_screen.dart';
 
-void main() {
-  runApp(MyApp());
+Future<void> main() async {
+ runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -51,6 +53,7 @@ class MyApp extends StatelessWidget {
           ProgressScreen.id: (context) => ProgressScreen(),
           RewardScreen.id: (context) => RewardScreen(),
           AddEventPage.id: (context) => AddEventPage(),
+          EditEventScreen.id: (context) => EditEventScreen(),
         },
       ),
     );
