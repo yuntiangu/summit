@@ -13,17 +13,19 @@ class CategoryList extends StatelessWidget {
         shrinkWrap: true,
         itemBuilder: (context, index) {
           final cat = categoryData.categories[index];
-          return CategoryTile(
-            cat.name,
-            false,
-            'Work Desc',
-            () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute<dynamic>(
-                      builder: (context) => TaskScreen(cat.name)));
-            },
-          );
+          if (cat.name != null) {
+            return CategoryTile(
+              cat.name,
+              false,
+              'Work Desc',
+                  () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute<dynamic>(
+                        builder: (context) => TaskScreen(cat.name)));
+              },
+            );
+          }
         },
         itemCount: categoryData.categoryCount,
       );

@@ -64,3 +64,15 @@ const List<String> kListScreens = [
   ProgressScreen.id,
   RewardScreen.id,
 ];
+
+const kProgressBarHeaderTextStyle = TextStyle(
+  color: kDarkBlueGrey,
+  fontSize: 20.0,
+  fontWeight: FontWeight.bold,
+);
+
+const kProgressBarPercentTextStyle = TextStyle(
+  color: kDarkBlueGrey,
+  fontSize: 18.0,
+  fontWeight: FontWeight.w500,
+);

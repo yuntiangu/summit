@@ -9,7 +9,8 @@ final _auth = FirebaseAuth.instance;
 
 class TaskData extends ChangeNotifier {
   List<Task> _tasks = [];
-  int count = 0;
+  int totalTaskCount = 0;
+  int totalTaskCompleted = 0;
 
   TaskData() {
     getTaskData(_tasks);
@@ -32,15 +33,34 @@ class TaskData extends ChangeNotifier {
               taskID: data['id'],
               categoryName: data['category title'],
               name: data['task title'],
-              dueDateTime: data['due date time'] == null ? null : data['due date time'].toDate(),
-              reminderDateTime: data['reminder date time'] == null ? null : data['reminder date time'].toDate(),
+              dueDateTime: data['due date time'] == null
+                  ? null
+                  : data['due date time'].toDate(),
+              reminderDateTime: data['reminder date time'] == null
+                  ? null
+                  : data['reminder date time'].toDate(),
               isDone: data['done']);
           listTasks.add(task);
         }
       });
     });
     notifyListeners();
+    databaseReference
+        .collection('user')
+        .document(email)
+        .collection('progress')
+        .snapshots()
+        .listen((event) {
+      event.documentChanges.forEach((element) {
+        if (element.document.documentID == "total") {
+          var data = element.document.data;
+          totalTaskCount = data["task count"];
+          totalTaskCompleted = data["task completed"];
+        }
+      });
+    });
   }
+
 
   UnmodifiableListView<Task> get tasks {
     return UnmodifiableListView(_tasks);
@@ -51,16 +71,16 @@ class TaskData extends ChangeNotifier {
   }
 
   void addTaskFirestore(String categoryTitle, String taskTitle, DateTime dueDateTime, DateTime reminderDateTime) async {
-    print('$count');
+    totalTaskCount++;
     final FirebaseUser user = await _auth.currentUser();
     final email = user.email;
-    DocumentReference docRef = await databaseReference
+    DocumentReference todoDocRef = await databaseReference
         .collection('user')
         .document(email)
         .collection('to do')
         .document();
-    docRef.setData({
-      "id": docRef.documentID,
+    todoDocRef.setData({
+      "id": todoDocRef.documentID,
       "category title": categoryTitle,
       "task title": taskTitle,
       "due date time": dueDateTime == null ? null : Timestamp.fromDate(dueDateTime),
@@ -68,6 +88,15 @@ class TaskData extends ChangeNotifier {
       "done": false,
     });
     notifyListeners();
+    DocumentReference progressTotalDocRef = databaseReference
+        .collection('user')
+        .document(email)
+        .collection('progress')
+        .document('total');
+    progressTotalDocRef.setData({
+      "task count": totalTaskCount,
+      "task completed": totalTaskCompleted,
+    });
   }
 
   void updateTask(Task task) async {
@@ -83,9 +112,34 @@ class TaskData extends ChangeNotifier {
       "done": task.isDone,
     });
     notifyListeners();
+//    await databaseReference
+//        .collection('user')
+//        .document(email)
+//        .collection('to do')
+//        .document('${task.taskID}')
+//        .delete();
+//    _tasks.remove(task);
+    if (task.isDone) {
+      totalTaskCompleted++;
+    } else {
+      totalTaskCompleted--;
+    }
+    await databaseReference
+        .collection('user')
+        .document(email)
+        .collection('progress')
+        .document('total')
+        .setData({
+      "task count": totalTaskCount,
+      "task completed": totalTaskCompleted,
+    });
   }
 
   void deleteTask(Task task) async {
+    if (task.isDone) {
+      totalTaskCompleted--;
+    }
+    totalTaskCount--;
     print("delete");
     final FirebaseUser user = await _auth.currentUser();
     final email = user.email;
@@ -97,5 +151,14 @@ class TaskData extends ChangeNotifier {
         .delete();
     _tasks.remove(task);
     notifyListeners();
+    await databaseReference
+        .collection('user')
+        .document(email)
+        .collection('progress')
+        .document('total')
+        .setData({
+      "task count": totalTaskCount,
+      "task completed": totalTaskCompleted,
+    });
   }
 }
