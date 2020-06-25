@@ -143,9 +143,6 @@ class _EditEventScreenState extends State<EditEventScreen> {
                               setState(() {
                                 processing = true;
                               });
-                              print(_title.text);
-                              print(_description.text);
-                              print(_eventDate);
                               setState(() {
                                 editFirestoreEvent();
                               });

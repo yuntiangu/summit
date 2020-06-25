@@ -135,6 +135,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                     TableCalendar(
                       events: _groupData(snapshot),
                       initialCalendarFormat: CalendarFormat.week,
+                      initialSelectedDay: null,
                       calendarStyle: CalendarStyle(
                           markersColor: kDarkBlueGrey,
                           canEventMarkersOverflow: true,
