@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:summit2/constants.dart';
 import 'package:summit2/models/calendar/event.dart';
+import 'package:summit2/screens/calendar/calendar_screen.dart';
 
 FirebaseAuth _auth = FirebaseAuth.instance;
 Firestore _firestore = Firestore.instance;
@@ -25,7 +26,6 @@ class _EditEventScreenState extends State<EditEventScreen> {
   DateTime _eventDate;
   bool processing;
   String email;
-  DocumentReference docRef;
 
   final _formKey = GlobalKey<FormState>();
   final _key = GlobalKey<ScaffoldState>();
@@ -35,42 +35,20 @@ class _EditEventScreenState extends State<EditEventScreen> {
     return user.email;
   }
 
-  Future<void> deleteEvent() async {
+  void editFirestoreEvent() async {
     final FirebaseUser user = await _auth.currentUser();
     final email = user.email;
-    await _firestore
+    Firestore.instance
         .collection('user')
         .document(email)
         .collection('events')
-        .document()
-        .delete();
-  }
-
-  Future<void> editFirestoreEvent() async {
-    final FirebaseUser user = await _auth.currentUser();
-    final email = user.email;
-    DocumentReference docRef = _firestore
-        .collection('user')
-        .document(email)
-        .collection('events')
-        .document();
-    await _firestore
-        .collection('user')
-        .document(email)
-        .collection('events')
-        .document()
-        .delete();
-    docRef.setData({
-      "id": docRef.documentID,
+        .document(widget.currEvent.id)
+        .setData({
+      "id": widget.currEvent.id,
       "title": _title.text,
       "description": _description.text,
       "event_date": _eventDate,
-    });
-
-    widget.currEvent = EventModel(
-        title: _title.text,
-        description: _description.text,
-        eventDate: _eventDate);
+    }, merge: true);
   }
 
   @override
@@ -171,8 +149,7 @@ class _EditEventScreenState extends State<EditEventScreen> {
                               setState(() {
                                 editFirestoreEvent();
                               });
-
-                              Navigator.pop(context);
+                              Navigator.pushNamed(context, CalendarScreen.id);
                               setState(() {
                                 processing = false;
                               });

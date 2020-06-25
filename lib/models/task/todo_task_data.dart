@@ -91,7 +91,7 @@ class TaskData extends ChangeNotifier {
         .collection('user')
         .document(email)
         .collection('to do')
-        .document('${task.taskID}')
+        .document(task.taskID)
         .delete();
     _tasks.remove(task);
     notifyListeners();

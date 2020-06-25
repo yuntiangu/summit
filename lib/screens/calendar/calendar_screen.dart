@@ -26,6 +26,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
   String email;
   QuerySnapshot firstValue;
   bool gotData;
+  DateTime _selectedDate;
 
   Future<String> getEmail() async {
     FirebaseUser user = await _auth.currentUser();
@@ -155,6 +156,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                       startingDayOfWeek: StartingDayOfWeek.sunday,
                       onDaySelected: (date, events) {
                         setState(() {
+                          _selectedDate = date;
                           _selectedEvents = events;
                         });
                       },
@@ -202,7 +204,9 @@ class _CalendarScreenState extends State<CalendarScreen> {
             }
           }),
       floatingActionButton: AddFab(
-        screen: AddEventPage(),
+        screen: AddEventPage(
+          selectedDate: this._selectedDate,
+        ),
       ),
       bottomNavigationBar: BottomBar(1),
     );

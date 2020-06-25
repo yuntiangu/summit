@@ -10,8 +10,9 @@ Firestore _firestore = Firestore.instance;
 class AddEventPage extends StatefulWidget {
   static const id = 'addEventPageId';
   final EventModel note;
+  DateTime selectedDate;
 
-  const AddEventPage({Key key, this.note}) : super(key: key);
+  AddEventPage({Key key, this.note, this.selectedDate}) : super(key: key);
 
   @override
   _AddEventPageState createState() => _AddEventPageState();
@@ -57,7 +58,7 @@ class _AddEventPageState extends State<AddEventPage> {
         text: widget.note != null ? widget.note.title : "");
     _description = TextEditingController(
         text: widget.note != null ? widget.note.description : "");
-    _eventDate = DateTime.now();
+    _eventDate = widget.selectedDate;
     processing = false;
     getEmail().then((value) => this.email = value);
   }
@@ -111,11 +112,11 @@ class _AddEventPageState extends State<AddEventPage> {
               ListTile(
                 title: Text("Date (YYYY-MM-DD)"),
                 subtitle: Text(
-                    "${_eventDate.year} - ${_eventDate.month} - ${_eventDate.day}"),
+                    "${widget.selectedDate.year} - ${widget.selectedDate.month} - ${widget.selectedDate.day}"),
                 onTap: () async {
                   DateTime picked = await showDatePicker(
                       context: context,
-                      initialDate: _eventDate,
+                      initialDate: widget.selectedDate,
                       firstDate: DateTime(_eventDate.year - 5),
                       lastDate: DateTime(_eventDate.year + 5));
                   if (picked != null) {
@@ -141,18 +142,8 @@ class _AddEventPageState extends State<AddEventPage> {
                                 processing = true;
                               });
                               if (widget.note != null) {
-//                                await eventDBS.updateData(widget.note.id, {
-//                                  "title": _title.text,
-//                                  "description": _description.text,
-//                                  "event_date": widget.note.eventDate,
-//                                });
                               } else {
                                 await addFirestoreEvent();
-//                                await eventDBS.createItem(EventModel(
-//                                  title: _title.text,
-//                                  description: _description.text,
-//                                  eventDate: _eventDate,
-//                                ));
                               }
                               Navigator.pop(context);
                               setState(() {

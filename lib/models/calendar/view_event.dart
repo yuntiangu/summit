@@ -34,7 +34,7 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Event details'),
+        title: Text('${widget.event.title}'),
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
@@ -45,8 +45,14 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
               widget.event.title,
               style: Theme.of(context).textTheme.headline4,
             ),
-            SizedBox(height: 20.0),
-            Text(widget.event.description),
+            SizedBox(height: 10.0),
+            Text(
+              widget.event.description,
+              style: TextStyle(
+                fontSize: 20.0,
+              ),
+            ),
+            SizedBox(height: 10.0),
             Text(widget.event.eventDate.toString()),
             Row(
               children: <Widget>[
