@@ -11,6 +11,7 @@ class CategoryList extends StatelessWidget {
       return ListView.builder(
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
+        // ignore: missing_return
         itemBuilder: (context, index) {
           final cat = categoryData.categories[index];
           if (cat.name != null) {

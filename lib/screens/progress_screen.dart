@@ -26,7 +26,10 @@ class _ProgressScreenState extends State<ProgressScreen> {
   @override
   Future<void> initState() {
     super.initState();
-    getEmail().then((value) => this.email = value);
+    getEmail().then((value) {
+      this.email = value;
+      setState(() {});
+    });
   }
 
   @override
