@@ -9,6 +9,7 @@ final _auth = FirebaseAuth.instance;
 
 class TaskData extends ChangeNotifier {
   List<Task> _tasks = [];
+  List<String> categoryNames = [];
   int totalTaskCount = 0;
   int totalTaskCompleted = 0;
 
@@ -88,6 +89,8 @@ class TaskData extends ChangeNotifier {
       "done": false,
     });
     notifyListeners();
+
+    //total progress bar
     DocumentReference progressTotalDocRef = databaseReference
         .collection('user')
         .document(email)
@@ -97,6 +100,24 @@ class TaskData extends ChangeNotifier {
       "task count": totalTaskCount,
       "task completed": totalTaskCompleted,
     });
+
+    //category progress bar
+    DocumentReference progressCatDocRef = databaseReference
+        .collection('user')
+        .document(email)
+        .collection('progress')
+        .document(categoryTitle);
+    if (categoryNames.contains(categoryTitle)) {
+      progressCatDocRef.updateData({
+        "task count": FieldValue.increment(1),
+      });
+    } else {
+      categoryNames.add(categoryTitle);
+      progressCatDocRef.setData({
+        "task count": 1,
+        "task completed": 0,
+      });
+    }
   }
 
   void updateTask(Task task) async {
@@ -112,13 +133,8 @@ class TaskData extends ChangeNotifier {
       "done": task.isDone,
     });
     notifyListeners();
-//    await databaseReference
-//        .collection('user')
-//        .document(email)
-//        .collection('to do')
-//        .document('${task.taskID}')
-//        .delete();
-//    _tasks.remove(task);
+
+    //total progress bar
     if (task.isDone) {
       totalTaskCompleted++;
     } else {
@@ -133,6 +149,22 @@ class TaskData extends ChangeNotifier {
       "task count": totalTaskCount,
       "task completed": totalTaskCompleted,
     });
+
+    //category progress bar
+    DocumentReference progressCatDocRef = databaseReference
+        .collection('user')
+        .document(email)
+        .collection('progress')
+        .document(task.categoryName);
+    if (task.isDone) {
+      progressCatDocRef.updateData({
+        "task completed": FieldValue.increment(1),
+      });
+    } else {
+      progressCatDocRef.updateData({
+        "task completed": FieldValue.increment(-1),
+      });
+    }
   }
 
   void deleteTask(Task task) async {
@@ -160,5 +192,22 @@ class TaskData extends ChangeNotifier {
       "task count": totalTaskCount,
       "task completed": totalTaskCompleted,
     });
+
+    //category progress bar
+    DocumentReference progressCatDocRef = databaseReference
+        .collection('user')
+        .document(email)
+        .collection('progress')
+        .document(task.categoryName);
+    if (task.isDone) {
+      progressCatDocRef.updateData({
+        "task count": FieldValue.increment(-1),
+        "task completed": FieldValue.increment(-1),
+      });
+    } else {
+      progressCatDocRef.updateData({
+        "task count": FieldValue.increment(-1),
+      });
+    }
   }
 }

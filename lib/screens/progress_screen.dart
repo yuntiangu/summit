@@ -57,31 +57,33 @@ class _ProgressScreenState extends State<ProgressScreen> {
                     .document(this.email)
                     .collection('progress')
                     .snapshots(),
-                // ignore: missing_return
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
                     final allData = snapshot.data.documents;
+                    List<Widget> progressBars = [];
                     for (var data in allData) {
-                      if (data.documentID == 'total') {
-                        print('DEBUGGG ${data['task count']}');
-                        int totalTaskCount = data["task count"];
-                        int totalTaskCompleted = data["task completed"];
-                        double totalPercentCompleted = totalTaskCompleted/totalTaskCount;
-                        return LinearPercentIndicator(
+                        int taskCount = data["task count"];
+                        int taskCompleted = data["task completed"];
+                        double percentCompleted = taskCompleted/taskCount;
+                        LinearPercentIndicator progressBar = LinearPercentIndicator(
                           lineHeight: 16.0,
-                          percent: totalPercentCompleted,
+                          percent: percentCompleted,
                           leading: Text(
-                            "Total:  ",
+                            "${data.documentID}:  ",
                             style: kProgressBarHeaderTextStyle,
                           ),
                           trailing: Text(
-                            '  ${(totalPercentCompleted*100).toStringAsFixed(1)} %',
+                            '  ${(percentCompleted*100).toStringAsFixed(1)} %',
                             style: kProgressBarPercentTextStyle,
                           ),
                           progressColor: kDarkBlueGrey,
                         );
-                      }
-                    }
+                        progressBars.add(progressBar);
+                        progressBars.add(SizedBox(height: 10.0,));
+                     }
+                    return Column(
+                      children: progressBars,
+                    );
                   }
                   return Center(
                     child: CircularProgressIndicator(
@@ -95,6 +97,5 @@ class _ProgressScreenState extends State<ProgressScreen> {
         ));
   }
 }
-
 
 
