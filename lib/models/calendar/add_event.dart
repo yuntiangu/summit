@@ -1,6 +1,9 @@
+import 'dart:io' show Platform;
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:summit2/constants.dart';
 import 'package:summit2/models/calendar/event.dart';
 
@@ -110,22 +113,54 @@ class _AddEventPageState extends State<AddEventPage> {
               ),
               const SizedBox(height: 10.0),
               ListTile(
-                title: Text("Date (YYYY-MM-DD)"),
-                subtitle: Text(
-                    "${widget.selectedDate.year} - ${widget.selectedDate.month} - ${widget.selectedDate.day}"),
-                onTap: () async {
-                  DateTime picked = await showDatePicker(
-                      context: context,
-                      initialDate: widget.selectedDate,
-                      firstDate: DateTime(_eventDate.year - 5),
-                      lastDate: DateTime(_eventDate.year + 5));
-                  if (picked != null) {
-                    setState(() {
-                      _eventDate = picked;
-                    });
-                  }
-                },
-              ),
+                  title: Text("Date"),
+                  subtitle: Text(
+                      "${widget.selectedDate.year} - ${widget.selectedDate.month} - ${widget.selectedDate.day}"),
+//                onTap: () async {
+//                  DateTime picked = await showDatePicker(
+//                      context: context,
+//                      initialDate: widget.selectedDate,
+//                      firstDate: DateTime(_eventDate.year - 5),
+//                      lastDate: DateTime(_eventDate.year + 5));
+//                  if (picked != null) {
+//                    setState(() {
+//                      _eventDate = picked;
+//                    });
+//                  }
+//                },//onTap
+                  onTap: Platform.isIOS
+                      ? () {
+                          DateTime picked = widget.selectedDate;
+                          DatePicker.showDatePicker(
+                            context,
+                            theme: DatePickerTheme(
+                              containerHeight: MediaQuery.of(context)
+                                      .copyWith()
+                                      .size
+                                      .height /
+                                  3,
+                            ),
+                            showTitleActions: true,
+                            minTime: DateTime(2019, 1, 1),
+                            onConfirm: (dateTime) {
+                              setState(() {
+                                _eventDate = dateTime;
+                              });
+                            },
+                          );
+                        }
+                      : () async {
+                          DateTime picked = await showDatePicker(
+                              context: context,
+                              initialDate: widget.selectedDate,
+                              firstDate: DateTime(_eventDate.year - 5),
+                              lastDate: DateTime(_eventDate.year + 5));
+                          if (picked != null) {
+                            setState(() {
+                              _eventDate = picked;
+                            });
+                          }
+                        }),
               SizedBox(height: 10.0),
               processing
                   ? Center(child: CircularProgressIndicator())

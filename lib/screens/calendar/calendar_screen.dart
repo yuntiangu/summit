@@ -48,6 +48,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
     _controller = CalendarController();
     _events = {};
     _selectedEvents = [];
+    _selectedDate = DateTime.now();
     initialiseCalendar().then((_) => setState(() {}));
   }
 
@@ -135,7 +136,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                     TableCalendar(
                       events: _groupData(snapshot),
                       initialCalendarFormat: CalendarFormat.week,
-                      initialSelectedDay: null,
+                      initialSelectedDay: DateTime.now(),
                       calendarStyle: CalendarStyle(
                           markersColor: kDarkBlueGrey,
                           canEventMarkersOverflow: true,
