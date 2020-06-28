@@ -1,67 +1,66 @@
-import 'dart:io' show Platform;
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'package:summit2/constants.dart';
 import 'package:summit2/models/calendar/event.dart';
+import 'package:summit2/screens/calendar/calendar_screen.dart';
 
 FirebaseAuth _auth = FirebaseAuth.instance;
 Firestore _firestore = Firestore.instance;
 
-class AddEventPage extends StatefulWidget {
-  static const id = 'addEventPageId';
-  final EventModel note;
-  DateTime selectedDate;
+class EditEventScreen extends StatefulWidget {
+  static const String id = 'editEvent_screen';
 
-  AddEventPage({Key key, this.note, this.selectedDate}) : super(key: key);
+  EventModel currEvent;
+  EditEventScreen({inEventModel}) {
+    this.currEvent = inEventModel;
+  }
 
   @override
-  _AddEventPageState createState() => _AddEventPageState();
+  _EditEventScreenState createState() => _EditEventScreenState();
 }
 
-class _AddEventPageState extends State<AddEventPage> {
-//  TextStyle style = TextStyle(fontFamily: 'Montserrat', fontSize: 20.0);
-  TextStyle style = kEventTextStyle;
+class _EditEventScreenState extends State<EditEventScreen> {
   TextEditingController _title;
   TextEditingController _description;
   DateTime _eventDate;
-  final _formKey = GlobalKey<FormState>();
-  final _key = GlobalKey<ScaffoldState>();
   bool processing;
   String email;
-  DocumentReference docRef;
+
+  final _formKey = GlobalKey<FormState>();
+  final _key = GlobalKey<ScaffoldState>();
 
   Future<String> getEmail() async {
     FirebaseUser user = await _auth.currentUser();
     return user.email;
   }
 
-  Future<void> addFirestoreEvent() async {
+  void editFirestoreEvent() async {
     final FirebaseUser user = await _auth.currentUser();
     final email = user.email;
-    DocumentReference docRef = await _firestore
+    Firestore.instance
         .collection('user')
         .document(email)
         .collection('events')
-        .document();
-    docRef.setData({
-      "id": docRef.documentID,
+        .document(widget.currEvent.id)
+        .setData({
+      "id": widget.currEvent.id,
       "title": _title.text,
       "description": _description.text,
       "event_date": _eventDate,
-    });
+    }, merge: true);
   }
 
   @override
   void initState() {
     super.initState();
     _title = TextEditingController(
-        text: widget.note != null ? widget.note.title : "");
+      text: widget.currEvent.title,
+    );
     _description = TextEditingController(
-        text: widget.note != null ? widget.note.description : "");
-    _eventDate = widget.selectedDate;
+      text: widget.currEvent.description,
+    );
+    _eventDate = widget.currEvent.eventDate;
     processing = false;
     getEmail().then((value) => this.email = value);
   }
@@ -70,7 +69,7 @@ class _AddEventPageState extends State<AddEventPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.note != null ? "Edit Event" : "Add event"),
+        title: Text("Edit Event"),
       ),
       key: _key,
       body: Form(
@@ -86,7 +85,7 @@ class _AddEventPageState extends State<AddEventPage> {
                   controller: _title,
                   validator: (value) =>
                       (value.isEmpty) ? "Please Enter title" : null,
-                  style: style,
+                  style: kEventTextStyle,
                   decoration: InputDecoration(
                       labelText: "Title",
                       filled: true,
@@ -104,7 +103,7 @@ class _AddEventPageState extends State<AddEventPage> {
                   maxLines: 5,
                   validator: (value) =>
                       (value.isEmpty) ? "Please Enter description" : null,
-                  style: style,
+                  style: kEventTextStyle,
                   decoration: InputDecoration(
                       labelText: "description",
                       border: OutlineInputBorder(
@@ -113,54 +112,22 @@ class _AddEventPageState extends State<AddEventPage> {
               ),
               const SizedBox(height: 10.0),
               ListTile(
-                  title: Text("Date"),
-                  subtitle: Text(
-                      "${widget.selectedDate.year} - ${widget.selectedDate.month} - ${widget.selectedDate.day}"),
-//                onTap: () async {
-//                  DateTime picked = await showDatePicker(
-//                      context: context,
-//                      initialDate: widget.selectedDate,
-//                      firstDate: DateTime(_eventDate.year - 5),
-//                      lastDate: DateTime(_eventDate.year + 5));
-//                  if (picked != null) {
-//                    setState(() {
-//                      _eventDate = picked;
-//                    });
-//                  }
-//                },//onTap
-                  onTap: Platform.isIOS
-                      ? () {
-                          DateTime picked = widget.selectedDate;
-                          DatePicker.showDatePicker(
-                            context,
-                            theme: DatePickerTheme(
-                              containerHeight: MediaQuery.of(context)
-                                      .copyWith()
-                                      .size
-                                      .height /
-                                  3,
-                            ),
-                            showTitleActions: true,
-                            minTime: DateTime(2019, 1, 1),
-                            onConfirm: (dateTime) {
-                              setState(() {
-                                _eventDate = dateTime;
-                              });
-                            },
-                          );
-                        }
-                      : () async {
-                          DateTime picked = await showDatePicker(
-                              context: context,
-                              initialDate: widget.selectedDate,
-                              firstDate: DateTime(_eventDate.year - 5),
-                              lastDate: DateTime(_eventDate.year + 5));
-                          if (picked != null) {
-                            setState(() {
-                              _eventDate = picked;
-                            });
-                          }
-                        }),
+                title: Text("Date (YYYY-MM-DD)"),
+                subtitle: Text(
+                    "${_eventDate.year} - ${_eventDate.month} - ${_eventDate.day}"),
+                onTap: () async {
+                  DateTime picked = await showDatePicker(
+                      context: context,
+                      initialDate: _eventDate,
+                      firstDate: DateTime(_eventDate.year - 5),
+                      lastDate: DateTime(_eventDate.year + 5));
+                  if (picked != null) {
+                    setState(() {
+                      _eventDate = picked;
+                    });
+                  }
+                },
+              ),
               SizedBox(height: 10.0),
               processing
                   ? Center(child: CircularProgressIndicator())
@@ -176,11 +143,10 @@ class _AddEventPageState extends State<AddEventPage> {
                               setState(() {
                                 processing = true;
                               });
-                              if (widget.note != null) {
-                              } else {
-                                await addFirestoreEvent();
-                              }
-                              Navigator.pop(context);
+                              setState(() {
+                                editFirestoreEvent();
+                              });
+                              Navigator.pushNamed(context, CalendarScreen.id);
                               setState(() {
                                 processing = false;
                               });
@@ -188,7 +154,7 @@ class _AddEventPageState extends State<AddEventPage> {
                           },
                           child: Text(
                             "Save",
-                            style: style.copyWith(
+                            style: kEventTextStyle.copyWith(
                                 color: Colors.white,
                                 fontWeight: FontWeight.bold),
                           ),

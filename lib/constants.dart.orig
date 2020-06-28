@@ -65,10 +65,7 @@ const List<String> kListScreens = [
   RewardScreen.id,
 ];
 
-const CircleBorder kTodayBorder = CircleBorder(
-  side: BorderSide(width: 1.0, color: Colors.red),
-);
-
+<<<<<<< HEAD
 const kProgressBarHeaderTextStyle = TextStyle(
   color: kDarkBlueGrey,
   fontSize: 20.0,
@@ -79,4 +76,8 @@ const kProgressBarPercentTextStyle = TextStyle(
   color: kDarkBlueGrey,
   fontSize: 18.0,
   fontWeight: FontWeight.w500,
+=======
+const CircleBorder kTodayBorder = CircleBorder(
+  side: BorderSide(width: 1.0, color: Colors.red),
+>>>>>>> 905e4eeb2e374b0637fcf06d5b5a69810baa1f1d
 );

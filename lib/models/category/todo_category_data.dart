@@ -1,10 +1,10 @@
 import 'dart:collection';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:summit2/models/category/category_box.dart';
 import 'package:summit2/models/task/task_list.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 final _auth = FirebaseAuth.instance;
 final databaseReference = Firestore.instance;
@@ -35,7 +35,7 @@ class CategoryData extends ChangeNotifier {
         if (!_categoryNames.contains(categoryName)) {
           _categoryNames.add(categoryName);
           CategoryBox category =
-          CategoryBox(categoryName, TasksList(categoryName));
+              CategoryBox(categoryName, TasksList(categoryName));
           listCategories.add(category);
         }
       });
