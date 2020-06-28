@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:summit2/constants.dart';
 
 class TaskTile extends StatelessWidget {
   final bool isChecked;
@@ -40,7 +41,7 @@ class TaskTile extends StatelessWidget {
       isThreeLine:
           (reminderDateTime == null && dueDateTime == null) ? false : true,
       trailing: Checkbox(
-        activeColor: Colors.lightBlueAccent,
+        activeColor: kDarkBlueGrey,
         value: isChecked,
         onChanged: checkboxCallback,
       ),

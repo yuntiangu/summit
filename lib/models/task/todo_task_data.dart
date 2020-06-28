@@ -12,6 +12,7 @@ class TaskData extends ChangeNotifier {
   List<String> categoryNames = [];
   int totalTaskCount = 0;
   int totalTaskCompleted = 0;
+  int rewardsCounter = 0;
 
   TaskData() {
     getTaskData(_tasks);
@@ -46,6 +47,7 @@ class TaskData extends ChangeNotifier {
       });
     });
     notifyListeners();
+    //progress bar
     databaseReference
         .collection('user')
         .document(email)
@@ -57,6 +59,20 @@ class TaskData extends ChangeNotifier {
           var data = element.document.data;
           totalTaskCount = data["task count"];
           totalTaskCompleted = data["task completed"];
+        }
+      });
+    });
+    //rewards
+    databaseReference
+        .collection('user')
+        .document(email)
+        .collection('rewards')
+        .snapshots()
+        .listen((event) {
+      event.documentChanges.forEach((element) {
+        if (element.document.documentID == "rewards completed") {
+          var data = element.document.data;
+          rewardsCounter = data["rewards counter"];
         }
       });
     });
@@ -163,6 +179,24 @@ class TaskData extends ChangeNotifier {
     } else {
       progressCatDocRef.updateData({
         "task completed": FieldValue.increment(-1),
+      });
+    }
+
+    //rewards counter
+    DocumentReference rewardsDocRef = databaseReference
+        .collection('user')
+        .document(email)
+        .collection('rewards')
+        .document('rewards completed');
+    if (task.isDone) {
+      rewardsCounter++;
+      rewardsDocRef.setData({
+        "rewards counter": rewardsCounter,
+      });
+    } else {
+      rewardsCounter--;
+      rewardsDocRef.setData({
+        "rewards counter": rewardsCounter,
       });
     }
   }

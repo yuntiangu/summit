@@ -24,7 +24,7 @@ class _ProgressScreenState extends State<ProgressScreen> {
   }
 
   @override
-  Future<void> initState() {
+  void initState() {
     super.initState();
     getEmail().then((value) {
       this.email = value;
@@ -48,54 +48,62 @@ class _ProgressScreenState extends State<ProgressScreen> {
         ),
         bottomNavigationBar: BottomBar(2),
         body: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            children: <Widget>[
-              StreamBuilder<QuerySnapshot>(
-                stream: databaseReference
-                    .collection('user')
-                    .document(this.email)
-                    .collection('progress')
-                    .snapshots(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    final allData = snapshot.data.documents;
-                    List<Widget> progressBars = [];
-                    for (var data in allData) {
-                        int taskCount = data["task count"];
-                        int taskCompleted = data["task completed"];
-                        double percentCompleted = taskCompleted/taskCount;
-                        LinearPercentIndicator progressBar = LinearPercentIndicator(
-                          lineHeight: 16.0,
-                          percent: percentCompleted,
-                          leading: Text(
-                            "${data.documentID}:  ",
-                            style: kProgressBarHeaderTextStyle,
-                          ),
-                          trailing: Text(
-                            '  ${(percentCompleted*100).toStringAsFixed(1)} %',
-                            style: kProgressBarPercentTextStyle,
-                          ),
-                          progressColor: kDarkBlueGrey,
-                        );
-                        progressBars.add(progressBar);
-                        progressBars.add(SizedBox(height: 10.0,));
-                     }
-                    return Column(
-                      children: progressBars,
-                    );
-                  }
-                  return Center(
-                    child: CircularProgressIndicator(
-                      backgroundColor: Colors.lightBlueAccent,
-                    ),
+          padding: const EdgeInsets.symmetric(
+            vertical: 20.0,
+            horizontal: 25.0,
+          ),
+          child: StreamBuilder<QuerySnapshot>(
+            stream: databaseReference
+                .collection('user')
+                .document(this.email)
+                .collection('progress')
+                .snapshots(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                final allData = snapshot.data.documents;
+                List<Widget> progressBars = [];
+                for (var data in allData) {
+                  int taskCount = data["task count"];
+                  int taskCompleted = data["task completed"];
+                  double percentCompleted = taskCompleted / taskCount;
+                  Column progressBar = Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      LinearPercentIndicator(
+                        lineHeight: 25.0,
+                        percent: percentCompleted,
+                        trailing: Text(
+                          (percentCompleted < 0.1)
+                              ? '      ${(percentCompleted * 100).toInt().toString()} %'
+                              : (percentCompleted == 1)
+                                  ? '  ${(percentCompleted * 100).toInt().toString()} %'
+                                  : '    ${(percentCompleted * 100).toInt().toString()} %',
+                          style: kProgressBarPercentTextStyle,
+                        ),
+                        progressColor: kDarkBlueGrey,
+                      ),
+                      Text(
+                        "${data.documentID}",
+                        style: kProgressBarHeaderTextStyle,
+                      ),
+                    ],
                   );
-                },
-              ),
-            ],
+                  progressBars.add(progressBar);
+                  progressBars.add(SizedBox(
+                    height: 15.0,
+                  ));
+                }
+                return Column(
+                  children: progressBars,
+                );
+              }
+              return Center(
+                child: CircularProgressIndicator(
+                  backgroundColor: Colors.lightBlueAccent,
+                ),
+              );
+            },
           ),
         ));
   }
 }
-
-
