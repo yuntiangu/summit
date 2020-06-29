@@ -25,11 +25,11 @@ Phase 2:
 -	Connecting our Calendar Page to Firebase, allowing for the storing of data based on user email 
 -	Implementation of a progress bar, keeping track of the percentage of tasks completed overall and for each category.
 -	Release of new app icons based on the number of tasks completed 
--	Notifications (Android) to remind users of their tasks
-(Notifications would only be implemented on Android as iOS charges a fee)
+
 
 Phase 3:
--	Notifications (Android) to remind users of their events
+-	Notifications (Android) to remind users of their tasks
+(Notifications would only be implemented on Android as iOS charges a fee)
 -	Improving the storage of data (for to-do list)
 -	Implementing a progress bar to keep track of the percentage of tasks completed on time
 -	Allowing users to change their app icons
