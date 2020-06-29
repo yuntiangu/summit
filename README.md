@@ -25,6 +25,7 @@ Phase 2:
 -	Connecting our Calendar Page to Firebase, allowing for the storing of data based on user email 
 -	Implementation of a progress bar, keeping track of the percentage of tasks completed overall and for each category.
 -	Release of new app icons based on the number of tasks completed 
+-	Allowing users to change their app icons
 
 
 Phase 3:
@@ -32,7 +33,6 @@ Phase 3:
 (Notifications would only be implemented on Android as iOS charges a fee)
 -	Improving the storage of data (for to-do list)
 -	Implementing a progress bar to keep track of the percentage of tasks completed on time
--	Allowing users to change their app icons
 -	Implementing authentication services through LumiNUS
 -	Connecting our database to LumiNUS to allow for the automatic pulling of tasks and calendar events from LumiNUS
 -	Improve the entire UI of our app (ensuring a consistent UI, building smoother transitions through animations)
