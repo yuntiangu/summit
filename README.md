@@ -73,6 +73,8 @@ As of phase 2, we have conducted developer and user testing with 3 individuals. 
 
 [Milestone 1 App Walkthrough](https://youtu.be/Ih9LIYMVL5k)
 
+[Milestone 2 App Walkthrough](https://youtu.be/Wsk-k_lVZTY)
+
 [UX Program Flow](https://drive.google.com/file/d/17OUUayTRPn0P3Pa_KmxGoqzXls1L8SR3/view)
 
 [Poster Link](https://docs.google.com/presentation/d/1n6n6FBOJjyZbyPo2389HsmWM8EyCu0vq77wNdqc_Vkw/edit?usp=sharing)
