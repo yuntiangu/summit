@@ -37,6 +37,8 @@ Phase 3:
 -	Connecting our database to LumiNUS to allow for the automatic pulling of tasks and calendar events from LumiNUS
 -	Improve the entire UI of our app (ensuring a consistent UI, building smoother transitions through animations)
 
+[FrontEnd/BackEnd WalkThrough](https://drive.google.com/file/d/1ovEeuez4GGploSDG_n-z5kdTIl9vDXIl/view?usp=sharing)
+
 +++++++++++++
 
 Aim: To create an application to improve the productivity levels of NUS students.
