@@ -4,15 +4,38 @@
 
 ### Project Description: 
 
-Summit is a productivity app. It is a Tasker that helps us manage our tasks. Specifically, the purpose of Summit is to have a seamless integration between the application and LumiNUS platform. This is accomplished through having our application be built on the Flutter framework, which will conveniently cater to both Android and iOS users.
+Summit is a productivity app which aims to help us manage our tasks and schedule. More specifically, we aim to build a seamless integration between Summit and LumiNUS – NUS’s module and assignment platform.
 
-Our current phase (Phase 1), is to familiarise ourselves with the Flutter framework, setting up Firebase as our cloud database and online authentication for our users, and finalising our mockups while creating the skeletons for the application (To-Do List and Calendar Page).
+Our mobile application would be built on the Flutter, cross-platform framework, allowing us to conveniently cater to both Android and iOS users. All data would be stored on Google Firebase and our source code control system is Git.
 
-Our next phase (Phase 2), would be focused on improving the back-end of our application. Firstly, we would ensure that each user’s tasks and events are stored within firebase. Thereafter, we would implement a notifications system to remind users of their upcoming events and tasks due dates. We would then integrate our application with each student’s LumiNUS data. This would include our app sending notifications in-sync with LumiNUS’ announcements and Task Due Countdown Timer.  Phase 2 will also entail the app having capabilities to track a user’s progress in task completion.
+Our implementation timeline is as follows:
 
-The final phase (Phase 3) outline would be working on the gamification side of our app, whereby the users would receive new app icons on each milestone of task completed as rewards for their consistency and hard work. Thereafter, we would improve the entire UI of our app, including the addition of animations for a smoother app experience. 
+Phase 1: 
+-	Familiarise ourselves with Flutter and Dart programming language through online tutorials
+-	Building our mock-up UI and UX flow through Figma
+-	Setting up Google Firebase as our cloud database
+-	Implementing online authentication (email and password) for our users
+-	Building our app skeleton 
+-	Implementing the basic To-Do List (adding, completing and deleting tasks) and Calendar Page functionality (adding of event name, date and time)
 
-For our Source Code Control System, we would be using Git.
+Phase 2:
+-	Connecting our To-Do List to Firebase, allowing for the storing of data based on user email 
+-	Implementing a due and reminder date-time for our To-Do List
+-	Adding event markers to our calendar to indicate the presence of events at a every date
+-	Connecting our Calendar Page to Firebase, allowing for the storing of data based on user email 
+-	Implementation of a progress bar, keeping track of the percentage of tasks completed overall and for each category.
+-	Release of new app icons based on the number of tasks completed 
+-	Notifications (Android) to remind users of their tasks
+(Notifications would only be implemented on Android as iOS charges a fee)
+
+Phase 3:
+-	Notifications (Android) to remind users of their events
+-	Improving the storage of data (for to-do list)
+-	Implementing a progress bar to keep track of the percentage of tasks completed on time
+-	Allowing users to change their app icons
+-	Implementing authentication services through LumiNUS
+-	Connecting our database to LumiNUS to allow for the automatic pulling of tasks and calendar events from LumiNUS
+-	Improve the entire UI of our app (ensuring a consistent UI, building smoother transitions through animations)
 
 +++++++++++++
 
@@ -41,6 +64,9 @@ Additionally, we have a rewards system, whereby as the user completes tasks, he 
     -LumiNUS API
     -Git
 
+Testing:
+As of phase 2, we have conducted developer and user testing with 3 individuals. During phase 3, we would be conducting more robust testing systems. 
+
 [UI/UX Prototype](https://drive.google.com/file/d/1QaSjk1qGhQfM8YVW1si3e7FY4kyx8elP/view?usp=sharing)
 
 [Milestone 1 App Walkthrough](https://youtu.be/Ih9LIYMVL5k)
@@ -48,3 +74,4 @@ Additionally, we have a rewards system, whereby as the user completes tasks, he 
 [UX Program Flow](https://drive.google.com/file/d/17OUUayTRPn0P3Pa_KmxGoqzXls1L8SR3/view)
 
 [Poster Link](https://docs.google.com/presentation/d/1n6n6FBOJjyZbyPo2389HsmWM8EyCu0vq77wNdqc_Vkw/edit?usp=sharing)
+
