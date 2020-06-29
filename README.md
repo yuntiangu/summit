@@ -80,3 +80,12 @@ As of phase 2, we have conducted developer and user testing with 3 individuals. 
 [Poster Link](https://docs.google.com/presentation/d/1n6n6FBOJjyZbyPo2389HsmWM8EyCu0vq77wNdqc_Vkw/edit?usp=sharing)
 
 [Project Log](https://docs.google.com/spreadsheets/d/1QzaLbCOcQz6imKT6Gw6qvRGGeeXJ6V3ohopMn0OgsLA/edit#gid=0)
+
+### Problems Encountered during Milestone 2
+1. During milestone 2, we connected our to-do list, calendar, progress bar and rewards page to a FireBase database. The storing of data into firebase went smoothly, but we struggled with the retrieval of data. For all of the above 4 features, we spent substantial time ensuring the our app actively listened to the database and no hot reload was required for new data to be displayed on our app. The main issue we faced was due to the listening of data / streams from firebase being asynchronous.
+
+2. Initially, we planned to implement notifications for Milestone 2. However, we realised that the implementation of notifications on iOS is subjected to charges. We then began trying to implement notifcations on Android instead, but were unable to retrieve the app token key for firebase cloud messenging. We would continue reading up on the steps to implementing notifications on Android.
+
+3. For our calendar page, we faced issues with allowing the added events to show automatically, without hot reload. (i.e. upon adding of events, the calendar marker reflects the added event immediately, but not the "words" below). This issue is likely linked to issue 1.
+
+4. As we were struggling with connecting our to-do list to firebase initially, the storage of information is not optimal. Currently the database is stored as such: User email --> categories and tasks instead of User email --> categories --> tasks. Additionally, the progress tracker and reward features connection with the database is not optimal. Currently, it is connected based on catgeory name, which is not necessarily a unique identifier / primary key. This would result in errors if 2 categories were to have the same name.  
