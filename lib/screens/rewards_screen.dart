@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:summit2/components/RoundedButton.dart';
 import 'package:summit2/components/bottom_bar.dart';
 import 'package:summit2/constants.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_dynamic_icon/flutter_dynamic_icon.dart';
 
 final databaseReference = Firestore.instance;
 final _auth = FirebaseAuth.instance;
@@ -108,7 +110,16 @@ class _RewardScreenState extends State<RewardScreen> {
                           color: Colors.grey,
                           width: 3.0,
                         ),
-                        onPressed: () {},
+                        onPressed: () async {
+                          try {
+                            if (await FlutterDynamicIcon.supportsAlternateIcons) {
+                              await FlutterDynamicIcon.setAlternateIconName('basic');
+                              print("App icon change successful");
+                              return;
+                            }
+                          } on PlatformException {} catch (e) {}
+                          print("Failed to change app icon");
+                        },
                       ),
                     ),
                     SizedBox(
@@ -117,9 +128,9 @@ class _RewardScreenState extends State<RewardScreen> {
                     Container(
                       width: 150.0,
                       height: 150.0,
-                      child: OutlineButton(
-                        child: (rewardsCounter < 10)
-                            ? Column(
+                      child: (rewardsCounter < 10)
+                          ? DecoratedBox(
+                              child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
                                   Icon(
@@ -137,19 +148,37 @@ class _RewardScreenState extends State<RewardScreen> {
                                     ),
                                   ),
                                 ],
-                              )
-                            : Image.asset(
+                              ),
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20.0),
+                                border: Border.all(
+                                  color: Colors.grey,
+                                  width: 3.0,
+                                ),
+                              ),
+                            )
+                          : OutlineButton(
+                              child: Image.asset(
                                 'images/basic_mountain1.png',
                               ),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20.0),
-                        ),
-                        borderSide: BorderSide(
-                          color: Colors.grey,
-                          width: 3.0,
-                        ),
-                        onPressed: () {},
-                      ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20.0),
+                              ),
+                              borderSide: BorderSide(
+                                color: Colors.grey,
+                                width: 3.0,
+                              ),
+                              onPressed: () async {
+                                try {
+                                  if (await FlutterDynamicIcon.supportsAlternateIcons) {
+                                    await FlutterDynamicIcon.setAlternateIconName('first');
+                                    print("App icon change successful");
+                                    return;
+                                  }
+                                } on PlatformException {} catch (e) {}
+                                print("Failed to change app icon");
+                              },
+                            ),
                     ),
                   ],
                 ),
@@ -162,9 +191,9 @@ class _RewardScreenState extends State<RewardScreen> {
                     Container(
                       width: 150.0,
                       height: 150.0,
-                      child: OutlineButton(
-                        child: (rewardsCounter < 50)
-                            ? Column(
+                      child: (rewardsCounter < 50)
+                          ? DecoratedBox(
+                        child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Icon(
@@ -182,8 +211,17 @@ class _RewardScreenState extends State<RewardScreen> {
                               ),
                             ),
                           ],
-                        )
-                            : Image.asset(
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20.0),
+                          border: Border.all(
+                            color: Colors.grey,
+                            width: 3.0,
+                          ),
+                        ),
+                      )
+                          : OutlineButton(
+                        child: Image.asset(
                           'images/basic_mountain2.png',
                         ),
                         shape: RoundedRectangleBorder(
@@ -193,7 +231,16 @@ class _RewardScreenState extends State<RewardScreen> {
                           color: Colors.grey,
                           width: 3.0,
                         ),
-                        onPressed: () {},
+                        onPressed: () async {
+                          try {
+                            if (await FlutterDynamicIcon.supportsAlternateIcons) {
+                              await FlutterDynamicIcon.setAlternateIconName('second');
+                              print("App icon change successful");
+                              return;
+                            }
+                          } on PlatformException {} catch (e) {}
+                          print("Failed to change app icon");
+                        },
                       ),
                     ),
                     SizedBox(
@@ -202,9 +249,9 @@ class _RewardScreenState extends State<RewardScreen> {
                     Container(
                       width: 150.0,
                       height: 150.0,
-                      child: OutlineButton(
-                        child: (rewardsCounter < 100)
-                            ? Column(
+                      child: (rewardsCounter < 100)
+                          ? DecoratedBox(
+                        child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Icon(
@@ -222,8 +269,17 @@ class _RewardScreenState extends State<RewardScreen> {
                               ),
                             ),
                           ],
-                        )
-                            : Image.asset(
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20.0),
+                          border: Border.all(
+                            color: Colors.grey,
+                            width: 3.0,
+                          ),
+                        ),
+                      )
+                          : OutlineButton(
+                        child: Image.asset(
                           'images/basic_mountain3.png',
                         ),
                         shape: RoundedRectangleBorder(
@@ -233,7 +289,16 @@ class _RewardScreenState extends State<RewardScreen> {
                           color: Colors.grey,
                           width: 3.0,
                         ),
-                        onPressed: () {},
+                        onPressed: () async {
+                          try {
+                            if (await FlutterDynamicIcon.supportsAlternateIcons) {
+                              await FlutterDynamicIcon.setAlternateIconName('third');
+                              print("App icon change successful");
+                              return;
+                            }
+                          } on PlatformException {} catch (e) {}
+                          print("Failed to change app icon");
+                        },
                       ),
                     ),
                   ],
@@ -247,9 +312,9 @@ class _RewardScreenState extends State<RewardScreen> {
                     Container(
                       width: 150.0,
                       height: 150.0,
-                      child: OutlineButton(
-                        child: (rewardsCounter < 200)
-                            ? Column(
+                      child: (rewardsCounter < 200)
+                          ? DecoratedBox(
+                        child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Icon(
@@ -267,8 +332,17 @@ class _RewardScreenState extends State<RewardScreen> {
                               ),
                             ),
                           ],
-                        )
-                            : Image.asset(
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20.0),
+                          border: Border.all(
+                            color: Colors.grey,
+                            width: 3.0,
+                          ),
+                        ),
+                      )
+                          : OutlineButton(
+                        child: Image.asset(
                           'images/basic_mountain4.png',
                         ),
                         shape: RoundedRectangleBorder(
@@ -278,7 +352,16 @@ class _RewardScreenState extends State<RewardScreen> {
                           color: Colors.grey,
                           width: 3.0,
                         ),
-                        onPressed: () {},
+                        onPressed: () async {
+                          try {
+                            if (await FlutterDynamicIcon.supportsAlternateIcons) {
+                              await FlutterDynamicIcon.setAlternateIconName('fourth');
+                              print("App icon change successful");
+                              return;
+                            }
+                          } on PlatformException {} catch (e) {}
+                          print("Failed to change app icon");
+                        },
                       ),
                     ),
                     SizedBox(
@@ -287,9 +370,9 @@ class _RewardScreenState extends State<RewardScreen> {
                     Container(
                       width: 150.0,
                       height: 150.0,
-                      child: OutlineButton(
-                        child: (rewardsCounter < 500)
-                            ? Column(
+                      child: (rewardsCounter < 500)
+                          ? DecoratedBox(
+                        child: Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
                             Icon(
@@ -307,8 +390,17 @@ class _RewardScreenState extends State<RewardScreen> {
                               ),
                             ),
                           ],
-                        )
-                            : Image.asset(
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20.0),
+                          border: Border.all(
+                            color: Colors.grey,
+                            width: 3.0,
+                          ),
+                        ),
+                      )
+                          : OutlineButton(
+                        child: Image.asset(
                           'images/basic_mountain5.png',
                         ),
                         shape: RoundedRectangleBorder(
@@ -318,7 +410,16 @@ class _RewardScreenState extends State<RewardScreen> {
                           color: Colors.grey,
                           width: 3.0,
                         ),
-                        onPressed: () {},
+                        onPressed: () async {
+                          try {
+                            if (await FlutterDynamicIcon.supportsAlternateIcons) {
+                              await FlutterDynamicIcon.setAlternateIconName('fifth');
+                              print("App icon change successful");
+                              return;
+                            }
+                          } on PlatformException {} catch (e) {}
+                          print("Failed to change app icon");
+                        },
                       ),
                     ),
                   ],
