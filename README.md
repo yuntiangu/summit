@@ -37,7 +37,6 @@ Phase 3:
 -	Connecting our database to LumiNUS to allow for the automatic pulling of tasks and calendar events from LumiNUS
 -	Improve the entire UI of our app (ensuring a consistent UI, building smoother transitions through animations)
 
-[FrontEnd/BackEnd WalkThrough](https://drive.google.com/file/d/1ovEeuez4GGploSDG_n-z5kdTIl9vDXIl/view?usp=sharing)
 
 +++++++++++++
 
@@ -67,7 +66,9 @@ Additionally, we have a rewards system, whereby as the user completes tasks, he 
     -Git
 
 Testing:
-As of phase 2, we have conducted developer and user testing with 3 individuals. During phase 3, we would be conducting more robust testing systems. 
+As of phase 2, we have conducted developer and user testing with 3 individuals. During phase 3, we would be conducting more robust testing through Firebase testing lab. 
+
+[FrontEnd/BackEnd WalkThrough](https://drive.google.com/file/d/1ovEeuez4GGploSDG_n-z5kdTIl9vDXIl/view?usp=sharing)
 
 [UI/UX Prototype](https://drive.google.com/file/d/1QaSjk1qGhQfM8YVW1si3e7FY4kyx8elP/view?usp=sharing)
 
@@ -80,6 +81,7 @@ As of phase 2, we have conducted developer and user testing with 3 individuals. 
 [Poster Link](https://docs.google.com/presentation/d/1n6n6FBOJjyZbyPo2389HsmWM8EyCu0vq77wNdqc_Vkw/edit?usp=sharing)
 
 [Project Log](https://docs.google.com/spreadsheets/d/1QzaLbCOcQz6imKT6Gw6qvRGGeeXJ6V3ohopMn0OgsLA/edit#gid=0)
+
 
 ### Problems Encountered during Milestone 2
 1. During milestone 2, we connected our to-do list, calendar, progress bar and rewards page to a FireBase database. The storing of data into firebase went smoothly, but we struggled with the retrieval of data. For all of the above 4 features, we spent substantial time ensuring the our app actively listened to the database and no hot reload was required for new data to be displayed on our app. The main issue we faced was due to the listening of data / streams from firebase being asynchronous.
