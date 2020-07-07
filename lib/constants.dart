@@ -69,7 +69,7 @@ const CircleBorder kTodayBorder = CircleBorder(
   side: BorderSide(width: 1.0, color: Colors.red),
 );
 
-const kProgressBarHeaderTextStyle = TextStyle(
+const kProgressBarTextStyle = TextStyle(
   color: kDarkBlueGrey,
   fontSize: 20.0,
   fontWeight: FontWeight.w500,
@@ -79,4 +79,10 @@ const kProgressBarPercentTextStyle = TextStyle(
   color: kDarkBlueGrey,
   fontSize: 18.0,
   fontWeight: FontWeight.w500,
+);
+
+const kProgressBarHeaderTextStyle = TextStyle(
+  color: kDarkBlueGrey,
+  fontSize: 23.0,
+  fontWeight: FontWeight.bold,
 );

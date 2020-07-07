@@ -13,6 +13,7 @@ class TaskData extends ChangeNotifier {
   int totalTaskCount = 0;
   int totalTaskCompleted = 0;
   int rewardsCounter = 0;
+  String progressBarTotalDocId;
 
   TaskData() {
     getTaskData(_tasks);
@@ -55,7 +56,7 @@ class TaskData extends ChangeNotifier {
         .snapshots()
         .listen((event) {
       event.documentChanges.forEach((element) {
-        if (element.document.documentID == "total") {
+        if (element.document.documentID == progressBarTotalDocId) {
           var data = element.document.data;
           totalTaskCount = data["task count"];
           totalTaskCompleted = data["task completed"];
@@ -107,12 +108,18 @@ class TaskData extends ChangeNotifier {
     notifyListeners();
 
     //total progress bar
-    DocumentReference progressTotalDocRef = databaseReference
+    CollectionReference progressCollRef = databaseReference
         .collection('user')
         .document(email)
-        .collection('progress')
-        .document('total');
-    progressTotalDocRef.setData({
+        .collection('progress');
+    DocumentReference progressDocRef;
+    if (progressBarTotalDocId == null) {
+      progressDocRef = progressCollRef.document();
+      progressBarTotalDocId = progressDocRef.documentID;
+    } else {
+      progressDocRef = progressCollRef.document(progressBarTotalDocId);
+    }
+    progressDocRef.setData({
       "task count": totalTaskCount,
       "task completed": totalTaskCompleted,
     });
@@ -156,12 +163,13 @@ class TaskData extends ChangeNotifier {
     } else {
       totalTaskCompleted--;
     }
-    await databaseReference
+    CollectionReference progressCollRef = databaseReference
         .collection('user')
         .document(email)
-        .collection('progress')
-        .document('total')
-        .setData({
+        .collection('progress');
+    DocumentReference progressDocRef;
+    progressDocRef = progressCollRef.document(progressBarTotalDocId);
+    progressDocRef.setData({
       "task count": totalTaskCount,
       "task completed": totalTaskCompleted,
     });
@@ -217,12 +225,14 @@ class TaskData extends ChangeNotifier {
         .delete();
     _tasks.remove(task);
     notifyListeners();
-    await databaseReference
+
+    CollectionReference progressCollRef = databaseReference
         .collection('user')
         .document(email)
-        .collection('progress')
-        .document('total')
-        .setData({
+        .collection('progress');
+    DocumentReference progressDocRef;
+    progressDocRef = progressCollRef.document(progressBarTotalDocId);
+    progressDocRef.setData({
       "task count": totalTaskCount,
       "task completed": totalTaskCompleted,
     });
