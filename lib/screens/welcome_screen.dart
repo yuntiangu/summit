@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:summit2/components/RoundedButton.dart';
 import 'package:summit2/constants.dart';
-
 import 'login_screen.dart';
+import 'lumi_screen.dart';
 import 'signup_screen.dart';
+
 
 class WelcomeScreen extends StatefulWidget {
   static const String id = 'welcome_screen';
@@ -27,7 +28,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   image: AssetImage('images/logoMystic.png'),
                 ),
                 SizedBox(
-                  height: 20.0,
+                  height: 30.0,
                 ),
                 RoundedButton(
                   colour: kLightBlueGrey,
@@ -43,6 +44,14 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   title: 'Log In',
                   onPressed: () {
                     Navigator.pushNamed(context, LoginScreen.id);
+                  },
+                ),
+                RoundedButton(
+                  colour: kLightBlueGrey,
+                  textColour: kDarkBlueGrey,
+                  title: 'Log In with LumiNUS',
+                  onPressed: () {
+                    Navigator.pushNamed(context, LumiScreen.id);
                   },
                 ),
               ],

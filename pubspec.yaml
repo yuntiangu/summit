@@ -21,6 +21,8 @@ dependencies:
   intl: ^0.15.8
   percent_indicator: ^2.1.5
   flutter_dynamic_icon: ^0.2.0+1
+  flutter_webview_plugin: ^0.3.11
+  http: ^0.12.1
 
 dev_dependencies:
   flutter_test:

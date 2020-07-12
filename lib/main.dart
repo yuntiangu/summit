@@ -7,6 +7,7 @@ import 'package:summit2/models/calendar/calendar_event_data.dart';
 import 'package:summit2/models/calendar/edit_event_screen.dart';
 import 'package:summit2/models/category/todo_category_data.dart';
 import 'package:summit2/screens/login_screen.dart';
+import 'package:summit2/screens/lumi_screen.dart';
 import 'package:summit2/screens/progress_screen.dart';
 import 'package:summit2/screens/rewards_screen.dart';
 import 'package:summit2/screens/signup_screen.dart';
@@ -47,6 +48,7 @@ class MyApp extends StatelessWidget {
         routes: {
           WelcomeScreen.id: (context) => WelcomeScreen(),
           LoginScreen.id: (context) => LoginScreen(),
+          LumiScreen.id: (context) => LumiScreen(),
           SignupScreen.id: (context) => SignupScreen(),
           TodoHome.id: (context) => TodoHome(),
           CalendarScreen.id: (context) => CalendarScreen(),
