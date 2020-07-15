@@ -22,7 +22,8 @@ dependencies:
   percent_indicator: ^2.1.5
   flutter_dynamic_icon: ^0.2.0+1
   flutter_webview_plugin: ^0.3.11
-  http: ^0.12.1
+  oauth2: ^1.6.1
+  dio: ^3.0.9
 
 dev_dependencies:
   flutter_test:
