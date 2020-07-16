@@ -1,12 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
-import 'dart:io';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:summit2/screens/todoScreens/todo_home.dart';
-import 'package:oauth2/oauth2.dart' as oauth2;
-//import 'package:http/http.dart';
 import 'package:dio/dio.dart';
 
 class LumiScreen extends StatefulWidget {
@@ -23,11 +21,13 @@ class _LumiScreenState extends State<LumiScreen> {
   StreamSubscription<String> _onUrlChanged;
   StreamSubscription<WebViewStateChanged> _onStateChanged;
   final _auth = FirebaseAuth.instance;
+  final databaseReference = Firestore.instance;
   String authorizationCode;
   String redirectUri = 'summit2:/oauth2-redirect';
   String accessToken;
   dynamic apiResponse;
   String lumiEmail;
+  String lumiSub;
 
   @override
   void dispose() {
@@ -72,11 +72,11 @@ class _LumiScreenState extends State<LumiScreen> {
                 print('api response: $apiResponse');
                 lumiEmail = getLumiEmail();
                 print(lumiEmail);
-                firebaseUser(lumiEmail);
+                lumiSub = getLumiSub();
+                firebaseUser(lumiEmail, lumiSub);
+                getModule(apiResponse);
               });
             });
-            //Navigator.pushNamed(context, TodoHome.id);
-            //flutterWebviewPlugin.close();
           }
         });
       }
@@ -129,39 +129,60 @@ class _LumiScreenState extends State<LumiScreen> {
     return payloadMap['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress'];
   }
 
-  void firebaseUser(String luminusUser) async {
+  String getLumiSub() {
+    final parts = accessToken.split('.');
+    final payload = utf8.decode(base64.decode(base64.normalize(parts[1])));
+    final payloadMap = json.decode(payload);
+    print(payloadMap['sub']);
+    return payloadMap['sub'];
+  }
+
+  void firebaseUser(String lumiEmail, String lumiSub) async {
     try {
       print('hmm');
-      final user = await _auth.signInWithEmailAndPassword(email: luminusUser, password: 'luminus_auth');
-      if (user != null) {
-        Navigator.pushNamed(context, TodoHome.id);
-        flutterWebviewPlugin.close();
-      }
+      final user = await _auth.signInWithEmailAndPassword(email: lumiEmail, password: lumiSub);
     } catch (e) {
       print(e);
       try {
         final newUser = await _auth.createUserWithEmailAndPassword(
-          email: luminusUser,
-          password: 'luminus_auth',
+          email: lumiEmail,
+          password: lumiSub,
         );
-        if (newUser != null) {
-          Navigator.pushNamed(context, TodoHome.id);
-          flutterWebviewPlugin.close();
-        }
       } catch (e) {
         print(e);
       }
     }
   }
 
+  Future<void> getModule(dynamic apiResponse) async {
+//    for (var module in apiResponse['data']) {
+//      String modName = module['name'];
+//      print(modName);
+//      final FirebaseUser user = await _auth.currentUser();
+//      final email = user.email;
+//      await databaseReference
+//          .collection('user')
+//          .document(email)
+//          .collection('to do')
+//          .add({
+//        "category title": modName,
+//        "done": null,
+//        "task title": null,
+//      });
+//    }
+    Navigator.pushNamed(context, TodoHome.id);
+    flutterWebviewPlugin.close();
+  }
+
   @override
   Widget build(BuildContext context) {
     String loginUrl =
         "https://vafs.nus.edu.sg/adfs/oauth2/authorize?response_type=code&client_id=INC000002163230&resource=sg_edu_nus_oauth&redirect_uri=summit2%3A%2Foauth2-redirect";
-    return new WebviewScaffold(
-        url: loginUrl,
-        appBar: new AppBar(
-          title: new Text("Login to LumiNUS"),
-        ));
+    return WebviewScaffold(
+      url: loginUrl,
+      appBar: AppBar(
+        title: new Text("Login to LumiNUS"),
+      ),
+    );
   }
 }

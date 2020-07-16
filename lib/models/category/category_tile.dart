@@ -22,7 +22,7 @@ class CategoryTile extends StatelessWidget {
         style: TextStyle(
             decoration: isChecked ? TextDecoration.lineThrough : null),
       ),
-      subtitle: Text(catDescription),
+      //subtitle: Text(catDescription),
       trailing: Platform.isIOS
           ? Icon(Icons.arrow_forward_ios)
           : Icon(Icons.arrow_forward),
