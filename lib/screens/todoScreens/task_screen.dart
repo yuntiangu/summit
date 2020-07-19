@@ -37,6 +37,7 @@ class _TaskScreenState extends State<TaskScreen> {
 
   @override
   Future<void> initState() {
+    TaskData();
     super.initState();
     getEmail().then((value) => this.email = value);
   }

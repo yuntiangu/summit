@@ -21,9 +21,6 @@ class TasksList extends StatelessWidget {
             shrinkWrap: true,
             itemBuilder: (context, index) {
               final task = taskData.tasks[index];
-              //print('debugggg ${task}');
-              //print('taskkk ${task.name}');
-              //print('cat name ${task.categoryName}');
               if (task.categoryName != _categoryName) {
                 return SizedBox(height: 0.0,);
               }

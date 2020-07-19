@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'todo_task.dart';
@@ -25,6 +27,7 @@ class TaskData extends ChangeNotifier {
     print('get task');
     FirebaseUser user = await _auth.currentUser();
     String email = user.email;
+    this.progressBarTotalDocId = user.uid;
     databaseReference
         .collection('user')
         .document(email)
@@ -33,11 +36,8 @@ class TaskData extends ChangeNotifier {
         .listen((event) {
       event.documentChanges.forEach((category) {
         var data = category.document.data;
-        listTasks.clear();
-        print('clear: $listTasks');
         data.forEach((key, value) {
           if (key != 'category title') {
-            print(value['due date time'].runtimeType == Timestamp);
             Task task = Task(
               categoryName: value['category title'],
               name: value['task title'],
@@ -45,8 +45,16 @@ class TaskData extends ChangeNotifier {
               reminderDateTime: value['reminder date time'] == null ? null : value['reminder date time'].toDate(),
               isDone: value['done'],
             );
-            print('adding get: ${task.name}');
-            listTasks.add(task);
+            List<String> allTaskNames = [];
+            for (Task printTask in listTasks){
+              allTaskNames.add(printTask.name);
+              print('name ${printTask.name}');
+            }
+            if (allTaskNames.contains(task.name) == false) {
+              print('adding get: ${task.name}');
+              allTaskNames.add(task.name);
+              listTasks.add(task);
+            }
             print('end: $listTasks');
           }
         });
@@ -124,12 +132,7 @@ class TaskData extends ChangeNotifier {
         .document(email)
         .collection('progress');
     DocumentReference progressDocRef;
-    if (progressBarTotalDocId == null) {
-      progressDocRef = progressCollRef.document();
-      progressBarTotalDocId = progressDocRef.documentID;
-    } else {
-      progressDocRef = progressCollRef.document(progressBarTotalDocId);
-    }
+    progressDocRef = progressCollRef.document(progressBarTotalDocId);
     progressDocRef.setData({
       "task count": totalTaskCount,
       "task completed": totalTaskCompleted,
