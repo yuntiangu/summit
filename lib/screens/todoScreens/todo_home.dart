@@ -67,18 +67,6 @@ class _TodoHomeState extends State<TodoHome> {
                     ),
                   );
                 } else {
-                  final categories = snapshot.data.documents;
-                  List<String> _categoryNames = [];
-                  List<CategoryBox> listCategories = [];
-                  for (var category in categories) {
-                    String categoryName = category['category title'];
-                    if (!_categoryNames.contains(categoryName)) {
-                      _categoryNames.add(categoryName);
-                      CategoryBox category =
-                      CategoryBox(categoryName, TasksList(categoryName));
-                      listCategories.add(category);
-                    }
-                  }
                   return CategoryList();
                 }
               },

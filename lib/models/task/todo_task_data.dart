@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
 import 'todo_task.dart';
 import 'dart:collection';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -20,6 +21,8 @@ class TaskData extends ChangeNotifier {
   }
 
   void getTaskData(List<Task> listTasks) async {
+    listTasks.clear();
+    print('get task');
     FirebaseUser user = await _auth.currentUser();
     String email = user.email;
     databaseReference
@@ -28,26 +31,29 @@ class TaskData extends ChangeNotifier {
         .collection('to do')
         .snapshots()
         .listen((event) {
-      event.documentChanges.forEach((element) {
-        if (element.type == DocumentChangeType.added) {
-          var data = element.document.data;
-          //print(data);
-          Task task = Task(
-              taskID: data['id'],
-              categoryName: data['category title'],
-              name: data['task title'],
-              dueDateTime: data['due date time'] == null
-                  ? null
-                  : data['due date time'].toDate(),
-              reminderDateTime: data['reminder date time'] == null
-                  ? null
-                  : data['reminder date time'].toDate(),
-              isDone: data['done']);
-          listTasks.add(task);
-        }
+      event.documentChanges.forEach((category) {
+        var data = category.document.data;
+        listTasks.clear();
+        print('clear: $listTasks');
+        data.forEach((key, value) {
+          if (key != 'category title') {
+            print(value['due date time'].runtimeType == Timestamp);
+            Task task = Task(
+              categoryName: value['category title'],
+              name: value['task title'],
+              dueDateTime: value['due date time'] == null ? null : value['due date time'].toDate(),
+              reminderDateTime: value['reminder date time'] == null ? null : value['reminder date time'].toDate(),
+              isDone: value['done'],
+            );
+            print('adding get: ${task.name}');
+            listTasks.add(task);
+            print('end: $listTasks');
+          }
+        });
       });
     });
     notifyListeners();
+
     //progress bar
     databaseReference
         .collection('user')
@@ -79,7 +85,6 @@ class TaskData extends ChangeNotifier {
     });
   }
 
-
   UnmodifiableListView<Task> get tasks {
     return UnmodifiableListView(_tasks);
   }
@@ -88,22 +93,28 @@ class TaskData extends ChangeNotifier {
     return _tasks.length;
   }
 
-  void addTaskFirestore(String categoryTitle, String taskTitle, DateTime dueDateTime, DateTime reminderDateTime) async {
+  void addTaskFirestore(String categoryTitle, String taskTitle,
+      DateTime dueDateTime, DateTime reminderDateTime) async {
     totalTaskCount++;
     final FirebaseUser user = await _auth.currentUser();
     final email = user.email;
-    DocumentReference todoDocRef = await databaseReference
+
+    await databaseReference
         .collection('user')
         .document(email)
         .collection('to do')
-        .document();
-    todoDocRef.setData({
-      "id": todoDocRef.documentID,
-      "category title": categoryTitle,
-      "task title": taskTitle,
-      "due date time": dueDateTime == null ? null : Timestamp.fromDate(dueDateTime),
-      "reminder date time": reminderDateTime == null ? null : Timestamp.fromDate(reminderDateTime),
-      "done": false,
+        .document(categoryTitle)
+        .updateData({
+      taskTitle: {
+        "category title": categoryTitle,
+        "task title": taskTitle,
+        "due date time":
+        dueDateTime == null ? null : Timestamp.fromDate(dueDateTime),
+        "reminder date time": reminderDateTime == null
+            ? null
+            : Timestamp.fromDate(reminderDateTime),
+        "done": false,
+      },
     });
     notifyListeners();
 
@@ -151,9 +162,19 @@ class TaskData extends ChangeNotifier {
         .collection('user')
         .document(email)
         .collection('to do')
-        .document('${task.taskID}')
+        .document(task.categoryName)
         .updateData({
-      "done": task.isDone,
+      task.name: {
+        "category title": task.categoryName,
+        "task title": task.name,
+        "due date time": task.dueDateTime == null
+            ? null
+            : Timestamp.fromDate(task.dueDateTime),
+        "reminder date time": task.reminderDateTime == null
+            ? null
+            : Timestamp.fromDate(task.reminderDateTime),
+        "done": task.isDone,
+      },
     });
     notifyListeners();
 
@@ -178,8 +199,7 @@ class TaskData extends ChangeNotifier {
     DocumentReference progressCatDocRef = databaseReference
         .collection('user')
         .document(email)
-        .collection('progress')
-        .document(task.categoryName);
+        .collection('progress').document(task.categoryName);
     if (task.isDone) {
       progressCatDocRef.updateData({
         "task completed": FieldValue.increment(1),
@@ -189,7 +209,6 @@ class TaskData extends ChangeNotifier {
         "task completed": FieldValue.increment(-1),
       });
     }
-
     //rewards counter
     DocumentReference rewardsDocRef = databaseReference
         .collection('user')
@@ -221,8 +240,10 @@ class TaskData extends ChangeNotifier {
         .collection('user')
         .document(email)
         .collection('to do')
-        .document('${task.taskID}')
-        .delete();
+        .document(task.categoryName)
+        .updateData({
+      task.name: FieldValue.delete(),
+    });
     _tasks.remove(task);
     notifyListeners();
 

@@ -17,7 +17,7 @@ class CategoryData extends ChangeNotifier {
   }
 
   void getCategoryData(List<CategoryBox> listCategories) async {
-    print('debug');
+    print('get');
     List<String> _categoryNames = [];
     FirebaseUser user = await _auth.currentUser();
     String email = user.email;
@@ -52,16 +52,16 @@ class CategoryData extends ChangeNotifier {
   }
 
   void addCategory(String newCategory) async {
+    print('add');
     final FirebaseUser user = await _auth.currentUser();
     final email = user.email;
     await databaseReference
         .collection('user')
         .document(email)
         .collection('to do')
-        .add({
-      "category title": newCategory,
-      "done": null,
-      "task title": null,
+        .document(newCategory)
+        .setData({
+      'category title': newCategory,
     });
     notifyListeners();
   }

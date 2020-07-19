@@ -9,7 +9,7 @@ class Task {
   bool isDone;
 
   Task({
-    @required this.taskID,
+    this.taskID,
     @required this.categoryName,
     @required this.name,
     this.dueDateTime,
