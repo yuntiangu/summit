@@ -4,6 +4,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
+import 'package:provider/provider.dart';
+import 'package:summit2/models/category/todo_category_data.dart';
 import 'package:summit2/screens/todoScreens/todo_home.dart';
 import 'package:dio/dio.dart';
 
@@ -73,8 +75,7 @@ class _LumiScreenState extends State<LumiScreen> {
                 lumiEmail = getLumiEmail();
                 print(lumiEmail);
                 lumiSub = getLumiSub();
-                firebaseUser(lumiEmail, lumiSub);
-                getModule(apiResponse);
+                firebaseUser(lumiEmail, lumiSub, apiResponse);
               });
             });
           }
@@ -137,17 +138,20 @@ class _LumiScreenState extends State<LumiScreen> {
     return payloadMap['sub'];
   }
 
-  void firebaseUser(String lumiEmail, String lumiSub) async {
+  void firebaseUser(String lumiEmail, String lumiSub, dynamic apiResponse) async {
     try {
       print('hmm');
       final user = await _auth.signInWithEmailAndPassword(email: lumiEmail, password: lumiSub);
+      getModule(apiResponse);
     } catch (e) {
       print(e);
       try {
+        print('creating new user');
         final newUser = await _auth.createUserWithEmailAndPassword(
           email: lumiEmail,
           password: lumiSub,
         );
+        getModule(apiResponse);
       } catch (e) {
         print(e);
       }
@@ -155,21 +159,25 @@ class _LumiScreenState extends State<LumiScreen> {
   }
 
   Future<void> getModule(dynamic apiResponse) async {
-//    for (var module in apiResponse['data']) {
-//      String modName = module['name'];
-//      print(modName);
-//      final FirebaseUser user = await _auth.currentUser();
-//      final email = user.email;
-//      await databaseReference
-//          .collection('user')
-//          .document(email)
-//          .collection('to do')
-//          .add({
-//        "category title": modName,
-//        "done": null,
-//        "task title": null,
-//      });
-//    }
+    for (var module in apiResponse['data']) {
+      String modName = module['name'];
+      print(modName);
+      final FirebaseUser user = await _auth.currentUser();
+      final email = user.email;
+      print('CHECK EMAIL: $email');
+      DocumentReference doc = databaseReference
+          .collection('user')
+          .document(email)
+          .collection('to do')
+          .document(modName);
+      doc.get()
+        .then((docSnapshot) => {
+          if (!docSnapshot.exists) {
+            Provider.of<CategoryData>(context, listen: false)
+                .addCategory(modName)
+          }
+      });
+    }
     Navigator.pushNamed(context, TodoHome.id);
     flutterWebviewPlugin.close();
   }

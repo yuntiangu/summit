@@ -12,7 +12,6 @@ final _auth = FirebaseAuth.instance;
 
 class TaskData extends ChangeNotifier {
   List<Task> _tasks = [];
-  List<String> categoryNames = [];
   int totalTaskCount = 0;
   int totalTaskCompleted = 0;
   int rewardsCounter = 0;
@@ -41,12 +40,16 @@ class TaskData extends ChangeNotifier {
             Task task = Task(
               categoryName: value['category title'],
               name: value['task title'],
-              dueDateTime: value['due date time'] == null ? null : value['due date time'].toDate(),
-              reminderDateTime: value['reminder date time'] == null ? null : value['reminder date time'].toDate(),
+              dueDateTime: value['due date time'] == null
+                  ? null
+                  : value['due date time'].toDate(),
+              reminderDateTime: value['reminder date time'] == null
+                  ? null
+                  : value['reminder date time'].toDate(),
               isDone: value['done'],
             );
             List<String> allTaskNames = [];
-            for (Task printTask in listTasks){
+            for (Task printTask in listTasks) {
               allTaskNames.add(printTask.name);
               print('name ${printTask.name}');
             }
@@ -117,7 +120,7 @@ class TaskData extends ChangeNotifier {
         "category title": categoryTitle,
         "task title": taskTitle,
         "due date time":
-        dueDateTime == null ? null : Timestamp.fromDate(dueDateTime),
+            dueDateTime == null ? null : Timestamp.fromDate(dueDateTime),
         "reminder date time": reminderDateTime == null
             ? null
             : Timestamp.fromDate(reminderDateTime),
@@ -144,17 +147,21 @@ class TaskData extends ChangeNotifier {
         .document(email)
         .collection('progress')
         .document(categoryTitle);
-    if (categoryNames.contains(categoryTitle)) {
-      progressCatDocRef.updateData({
-        "task count": FieldValue.increment(1),
-      });
-    } else {
-      categoryNames.add(categoryTitle);
-      progressCatDocRef.setData({
-        "task count": 1,
-        "task completed": 0,
-      });
-    }
+    progressCatDocRef.get().then((docSnapshot) => {
+          if (docSnapshot.exists)
+            {
+              progressCatDocRef.updateData({
+                "task count": FieldValue.increment(1),
+              })
+            }
+          else
+            {
+              progressCatDocRef.setData({
+                "task count": 1,
+                "task completed": 0,
+              })
+            }
+        });
   }
 
   void updateTask(Task task) async {
@@ -202,7 +209,8 @@ class TaskData extends ChangeNotifier {
     DocumentReference progressCatDocRef = databaseReference
         .collection('user')
         .document(email)
-        .collection('progress').document(task.categoryName);
+        .collection('progress')
+        .document(task.categoryName);
     if (task.isDone) {
       progressCatDocRef.updateData({
         "task completed": FieldValue.increment(1),
