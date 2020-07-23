@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:provider/provider.dart';
 import 'package:summit2/models/category/todo_category_data.dart';
+import 'package:summit2/models/task/todo_task_data.dart';
 import 'package:summit2/screens/todoScreens/todo_home.dart';
 import 'package:dio/dio.dart';
 
@@ -69,7 +70,7 @@ class _LumiScreenState extends State<LumiScreen> {
             getAccessToken(authorizationCode).then((value) {
               this.accessToken = value;
               print('access token: $accessToken');
-              callApi().then((value) {
+              callApiModule().then((value) {
                 this.apiResponse = value;
                 print('api response: $apiResponse');
                 lumiEmail = getLumiEmail();
@@ -109,16 +110,28 @@ class _LumiScreenState extends State<LumiScreen> {
     //print('pls work sighs ${response.data['access_token']}');
   }
 
-  Future<dynamic> callApi() async {
+//  Future<dynamic> refreshApi() async {
+//    var dio = Dio();
+//    Response response = await dio.post(
+//      'https://luminus.portal.azure-api.net/docs/services/User/operations/SyncModules',
+//      options: Options(
+//          headers: {
+//            'Ocp-Apim-Subscription-Key': 'c9672e39d6854ec084706e9a944f8b21',
+//            'Authorization': 'Bearer ${this.accessToken}',
+//          }
+//      ),
+//    );
+//    return response.data;
+//  }
+
+  Future<dynamic> callApiModule() async {
     var dio = Dio();
     Response response = await dio.get(
-      'https://luminus.azure-api.net/module',
-      options: Options(
-        headers: {
-          'Ocp-Apim-Subscription-Key': 'c9672e39d6854ec084706e9a944f8b21',
-          'Authorization': 'Bearer ${this.accessToken}',
-        }
-      ),
+      'https://luminus.azure-api.net/module/?populate=termDetail,Creator,isMandatory',
+      options: Options(headers: {
+        'Ocp-Apim-Subscription-Key': 'c9672e39d6854ec084706e9a944f8b21',
+        'Authorization': 'Bearer ${this.accessToken}',
+      }),
     );
     return response.data;
   }
@@ -127,7 +140,8 @@ class _LumiScreenState extends State<LumiScreen> {
     final parts = accessToken.split('.');
     final payload = utf8.decode(base64.decode(base64.normalize(parts[1])));
     final payloadMap = json.decode(payload);
-    return payloadMap['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress'];
+    return payloadMap[
+        'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress'];
   }
 
   String getLumiSub() {
@@ -138,10 +152,12 @@ class _LumiScreenState extends State<LumiScreen> {
     return payloadMap['sub'];
   }
 
-  void firebaseUser(String lumiEmail, String lumiSub, dynamic apiResponse) async {
+  void firebaseUser(
+      String lumiEmail, String lumiSub, dynamic apiResponse) async {
     try {
       print('hmm');
-      final user = await _auth.signInWithEmailAndPassword(email: lumiEmail, password: lumiSub);
+      final user = await _auth.signInWithEmailAndPassword(
+          email: lumiEmail, password: lumiSub);
       getModule(apiResponse);
     } catch (e) {
       print(e);
@@ -161,6 +177,7 @@ class _LumiScreenState extends State<LumiScreen> {
   Future<void> getModule(dynamic apiResponse) async {
     for (var module in apiResponse['data']) {
       String modName = module['name'];
+      String modId = module['id'];
       print(modName);
       final FirebaseUser user = await _auth.currentUser();
       final email = user.email;
@@ -170,12 +187,58 @@ class _LumiScreenState extends State<LumiScreen> {
           .document(email)
           .collection('to do')
           .document(modName);
-      doc.get()
-        .then((docSnapshot) => {
-          if (!docSnapshot.exists) {
-            Provider.of<CategoryData>(context, listen: false)
-                .addCategory(modName)
+      doc.get().then((docSnapshot) {
+            if (!docSnapshot.exists)
+              {
+                Provider.of<CategoryData>(context, listen: false)
+                    .addCategory(modName);
+              }
+            print('calling tasks');
+            callApiTask(modId).then((value) {
+              print('API called');
+              getTask(modName, value);
+            });
+          });
+    }
+  }
+
+  Future<dynamic> callApiTask(String moduleId) async {
+    var dio = Dio();
+    Response response = await dio.get(
+      'https://luminus.azure-api.net/files/$moduleId/tv',
+      options: Options(headers: {
+        'Ocp-Apim-Subscription-Key': 'c9672e39d6854ec084706e9a944f8b21',
+        'Authorization': 'Bearer ${this.accessToken}',
+      }),
+    );
+    return response.data;
+  }
+
+  Future<void> getTask(String categoryTitle, dynamic apiResponse) async {
+    print('getTask');
+    for (var task in apiResponse['data']) {
+      String taskName = task['name'];
+      DateTime dueDateTime = (task['endDate'] == null) ? null : DateTime.parse(task['endDate']);
+      DateTime reminderDateTime = (dueDateTime == null) ? null : dueDateTime.subtract(Duration(days: 1));
+      final FirebaseUser user = await _auth.currentUser();
+      final email = user.email;
+      DocumentReference doc = databaseReference
+          .collection('user')
+          .document(email)
+          .collection('to do')
+          .document(categoryTitle);
+      bool toAdd = true;
+      doc.get().then((docSnapshot) async {
+        docSnapshot.data.forEach((key, value) {
+          if (key == taskName) {
+            toAdd = false;
           }
+        });
+        if (toAdd == true) {
+          print('%%%% ADDING: $taskName');
+          Provider.of<TaskData>(context, listen: false)
+              .addTaskFirestore(categoryTitle, taskName, dueDateTime, reminderDateTime);
+        }
       });
     }
     Navigator.pushNamed(context, TodoHome.id);

@@ -64,6 +64,17 @@ class CategoryData extends ChangeNotifier {
       'category title': newCategory,
     });
     notifyListeners();
+
+    //progress
+    databaseReference
+        .collection('user')
+        .document(email)
+        .collection('progress')
+        .document(newCategory)
+        .setData({
+      "task count": 0,
+      "task completed": 0,
+    });
   }
 
 //  void deleteCategory(CategoryBox categoryBox) {

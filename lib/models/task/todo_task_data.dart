@@ -21,7 +21,7 @@ class TaskData extends ChangeNotifier {
     getTaskData(_tasks);
   }
 
-  void getTaskData(List<Task> listTasks) async {
+  Future<void> getTaskData(List<Task> listTasks) async {
     listTasks.clear();
     print('get task');
     FirebaseUser user = await _auth.currentUser();
@@ -80,6 +80,7 @@ class TaskData extends ChangeNotifier {
         }
       });
     });
+
     //rewards
     databaseReference
         .collection('user')
@@ -104,7 +105,7 @@ class TaskData extends ChangeNotifier {
     return _tasks.length;
   }
 
-  void addTaskFirestore(String categoryTitle, String taskTitle,
+  Future<void> addTaskFirestore(String categoryTitle, String taskTitle,
       DateTime dueDateTime, DateTime reminderDateTime) async {
     totalTaskCount++;
     final FirebaseUser user = await _auth.currentUser();
@@ -136,7 +137,7 @@ class TaskData extends ChangeNotifier {
         .collection('progress');
     DocumentReference progressDocRef;
     progressDocRef = progressCollRef.document(progressBarTotalDocId);
-    progressDocRef.setData({
+    await progressDocRef.setData({
       "task count": totalTaskCount,
       "task completed": totalTaskCompleted,
     });
@@ -147,21 +148,12 @@ class TaskData extends ChangeNotifier {
         .document(email)
         .collection('progress')
         .document(categoryTitle);
-    progressCatDocRef.get().then((docSnapshot) => {
-          if (docSnapshot.exists)
-            {
-              progressCatDocRef.updateData({
-                "task count": FieldValue.increment(1),
-              })
-            }
-          else
-            {
-              progressCatDocRef.setData({
-                "task count": 1,
-                "task completed": 0,
-              })
-            }
-        });
+    await progressCatDocRef.get().then((docSnapshot) {
+      print(docSnapshot.documentID);
+      progressCatDocRef.updateData({
+        "task count": FieldValue.increment(1),
+      });
+    });
   }
 
   void updateTask(Task task) async {
