@@ -1,11 +1,10 @@
-import 'dart:ffi';
-
-import 'package:flutter/foundation.dart';
-import 'package:flutter_datetime_picker/flutter_datetime_picker.dart';
-import 'todo_task.dart';
 import 'dart:collection';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
+
+import 'todo_task.dart';
 
 final databaseReference = Firestore.instance;
 final _auth = FirebaseAuth.instance;
@@ -41,12 +40,16 @@ class TaskData extends ChangeNotifier {
             Task task = Task(
               categoryName: value['category title'],
               name: value['task title'],
-              dueDateTime: value['due date time'] == null ? null : value['due date time'].toDate(),
-              reminderDateTime: value['reminder date time'] == null ? null : value['reminder date time'].toDate(),
+              dueDateTime: value['due date time'] == null
+                  ? null
+                  : value['due date time'].toDate(),
+              reminderDateTime: value['reminder date time'] == null
+                  ? null
+                  : value['reminder date time'].toDate(),
               isDone: value['done'],
             );
             List<String> allTaskNames = [];
-            for (Task printTask in listTasks){
+            for (Task printTask in listTasks) {
               allTaskNames.add(printTask.name);
               print('name ${printTask.name}');
             }
@@ -116,10 +119,11 @@ class TaskData extends ChangeNotifier {
       taskTitle: {
         "category title": categoryTitle,
         "task title": taskTitle,
-        "due date time":
-        dueDateTime == null ? null : Timestamp.fromDate(dueDateTime),
+        "due date time": dueDateTime == null
+            ? DateTime.now().add(Duration(hours: 1))
+            : Timestamp.fromDate(dueDateTime),
         "reminder date time": reminderDateTime == null
-            ? null
+            ? DateTime.now().add(Duration(hours: 1))
             : Timestamp.fromDate(reminderDateTime),
         "done": false,
       },
@@ -202,7 +206,8 @@ class TaskData extends ChangeNotifier {
     DocumentReference progressCatDocRef = databaseReference
         .collection('user')
         .document(email)
-        .collection('progress').document(task.categoryName);
+        .collection('progress')
+        .document(task.categoryName);
     if (task.isDone) {
       progressCatDocRef.updateData({
         "task completed": FieldValue.increment(1),

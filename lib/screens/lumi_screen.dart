@@ -1,11 +1,12 @@
 import 'dart:async';
 import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:summit2/screens/todoScreens/todo_home.dart';
-import 'package:dio/dio.dart';
 
 class LumiScreen extends StatefulWidget {
   static const String id = 'lumi_screen';
@@ -112,12 +113,10 @@ class _LumiScreenState extends State<LumiScreen> {
     var dio = Dio();
     Response response = await dio.get(
       'https://luminus.azure-api.net/module',
-      options: Options(
-        headers: {
-          'Ocp-Apim-Subscription-Key': 'c9672e39d6854ec084706e9a944f8b21',
-          'Authorization': 'Bearer ${this.accessToken}',
-        }
-      ),
+      options: Options(headers: {
+        'Ocp-Apim-Subscription-Key': 'c9672e39d6854ec084706e9a944f8b21',
+        'Authorization': 'Bearer ${this.accessToken}',
+      }),
     );
     return response.data;
   }
@@ -126,7 +125,8 @@ class _LumiScreenState extends State<LumiScreen> {
     final parts = accessToken.split('.');
     final payload = utf8.decode(base64.decode(base64.normalize(parts[1])));
     final payloadMap = json.decode(payload);
-    return payloadMap['http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress'];
+    return payloadMap[
+        'http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress'];
   }
 
   String getLumiSub() {
@@ -140,7 +140,8 @@ class _LumiScreenState extends State<LumiScreen> {
   void firebaseUser(String lumiEmail, String lumiSub) async {
     try {
       print('hmm');
-      final user = await _auth.signInWithEmailAndPassword(email: lumiEmail, password: lumiSub);
+      final user = await _auth.signInWithEmailAndPassword(
+          email: lumiEmail, password: lumiSub);
     } catch (e) {
       print(e);
       try {

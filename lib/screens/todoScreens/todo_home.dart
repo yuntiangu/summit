@@ -1,13 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:summit2/components/add_fab.dart';
-import 'package:summit2/constants.dart';
-import 'package:summit2/models/category/category_box.dart';
-import 'package:summit2/models/category/category_list.dart';
 import 'package:summit2/components/bottom_bar.dart';
-import 'package:summit2/models/task/task_list.dart';
+import 'package:summit2/constants.dart';
+import 'package:summit2/models/category/category_list.dart';
+import 'package:summit2/notification.dart';
+
 import 'add_category_screen.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 
 final _auth = FirebaseAuth.instance;
 
@@ -55,7 +55,7 @@ class _TodoHomeState extends State<TodoHome> {
             StreamBuilder<QuerySnapshot>(
               stream: databaseReference
                   .collection('user')
-                  .document(this.email)
+                  .document(email)
                   .collection('to do')
                   .snapshots(),
               // ignore: missing_return
@@ -78,6 +78,7 @@ class _TodoHomeState extends State<TodoHome> {
                 screen: AddCategoryScreen(),
               ),
             ),
+            NotificationManager(),
           ],
         ),
       ),
