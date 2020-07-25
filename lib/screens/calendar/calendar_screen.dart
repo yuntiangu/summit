@@ -93,6 +93,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
         DateTime dt =
             DateTime.fromMicrosecondsSinceEpoch(ts.microsecondsSinceEpoch);
         String dsTitle = ds['title'];
+        print(dsTitle);
         String dsDescription = ds['description'];
         String inId = ds['id'];
         EventModel toAdd = EventModel(
@@ -101,8 +102,9 @@ class _CalendarScreenState extends State<CalendarScreen> {
           eventDate: dt,
           id: inId,
         );
-        if (data[dt] == null) data[dt] = [];
-        data[dt].add(toAdd);
+        DateTime indexDate = DateTime(dt.year, dt.month, dt.day, 12, 0, 0, 0, 0);
+        if (data[indexDate] == null) data[indexDate] = [];
+        data[indexDate].add(toAdd);
       }
     }
     return data;
@@ -138,8 +140,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
                       initialCalendarFormat: CalendarFormat.week,
                       initialSelectedDay: DateTime.now(),
                       calendarStyle: CalendarStyle(
-                          markersColor: kDarkBlueGrey,
-                          canEventMarkersOverflow: true,
+                          markersColor: Colors.grey[350],
+                          markersMaxAmount: 1,
                           todayColor: kPink,
                           selectedColor: Theme.of(context).primaryColor,
                           todayStyle: TextStyle(
