@@ -84,7 +84,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
     });
   }
 
-  Map<DateTime, List> _groupData(AsyncSnapshot snapshot) {
+  Map<DateTime, List<dynamic>> _groupData(AsyncSnapshot snapshot) {
     Map<DateTime, List<dynamic>> data = {};
     List<DocumentSnapshot> j = snapshot.data.documents;
     for (DocumentSnapshot ds in j) {
