@@ -258,7 +258,7 @@ class _LumiScreenState extends State<LumiScreen> {
     for (var event in apiResponse['data']) {
       String eventName = '${event['module']}  ${event['activityText']}';
       DateTime date = DateTime.parse(event['eventdate']);
-      String eventTime = '${event['start_time']}:${event['end_time']}';
+      String eventTime = '${event['start_time']} to ${event['end_time']}';
       String location = event['room'];
       final FirebaseUser user = await _auth.currentUser();
       final email = user.email;
@@ -266,7 +266,7 @@ class _LumiScreenState extends State<LumiScreen> {
           .collection('user')
           .document(email)
           .collection('events')
-          .document('$eventName to $date');
+          .document('$eventName $date');
       doc.get().then((docSnapshot) {
         if (!docSnapshot.exists) {
           doc.setData({
