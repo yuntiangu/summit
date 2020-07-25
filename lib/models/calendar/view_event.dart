@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+import 'package:summit2/constants.dart';
 import 'package:summit2/models/calendar/edit_event_screen.dart';
 import 'package:summit2/models/calendar/event.dart';
 import 'package:summit2/screens/calendar/calendar_screen.dart';
@@ -43,24 +45,28 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
           children: <Widget>[
             Text(
               widget.event.title,
-              style: Theme.of(context).textTheme.headline4,
+              style: TextStyle(
+                fontSize: 24.0,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             SizedBox(height: 10.0),
             Text(
               widget.event.description,
               style: TextStyle(
-                fontSize: 20.0,
+                fontSize: 18.0,
               ),
             ),
             SizedBox(height: 10.0),
-            Text(widget.event.eventDate.toString()),
+            Text(
+              DateFormat('dd/MM/yyy').format(widget.event.eventDate).toString(),
+              style: TextStyle(
+                fontSize: 16.0,
+              ),
+            ),
             Row(
               children: <Widget>[
-                OutlineButton(
-                  child: Text(
-                    'Edit',
-                    style: TextStyle(fontSize: 20.0),
-                  ),
+                RaisedButton(
                   onPressed: () {
                     showModalBottomSheet(
                       context: context,
@@ -68,6 +74,15 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
                           EditEventScreen(inEventModel: this.widget.event),
                     );
                   },
+                  elevation: 5.0,
+                  child: const Text(
+                    'Edit',
+                    style: TextStyle(
+                      fontSize: 16.0,
+                      color: kDarkBlueGrey,
+                    ),
+                  ),
+                  color: Colors.white,
                 ),
                 SizedBox(
                   width: 5.0,
@@ -83,11 +98,11 @@ class _EventDetailsPageState extends State<EventDetailsPage> {
                   child: const Text(
                     'Delete',
                     style: TextStyle(
-                      fontSize: 20.0,
-                      color: Colors.white,
+                      fontSize: 16.0,
+                      color: kDarkBlueGrey,
                     ),
                   ),
-                  color: Colors.red,
+                  color: Colors.white,
                 )
               ],
             ),

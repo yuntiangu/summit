@@ -5,6 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:provider/provider.dart';
+import 'package:summit2/models/calendar/calendar_event_data.dart';
 import 'package:summit2/models/category/todo_category_data.dart';
 import 'package:summit2/models/task/todo_task_data.dart';
 import 'package:summit2/screens/todoScreens/todo_home.dart';
@@ -28,7 +29,8 @@ class _LumiScreenState extends State<LumiScreen> {
   String authorizationCode;
   String redirectUri = 'summit2:/oauth2-redirect';
   String accessToken;
-  dynamic apiResponse;
+  dynamic apiResponseMod;
+  dynamic apiResponseTimetable;
   String lumiEmail;
   String lumiSub;
 
@@ -71,12 +73,16 @@ class _LumiScreenState extends State<LumiScreen> {
               this.accessToken = value;
               print('access token: $accessToken');
               callApiModule().then((value) {
-                this.apiResponse = value;
-                print('api response: $apiResponse');
+                this.apiResponseMod = value;
+                print('api response: $apiResponseMod');
                 lumiEmail = getLumiEmail();
                 print(lumiEmail);
                 lumiSub = getLumiSub();
-                firebaseUser(lumiEmail, lumiSub, apiResponse);
+                callApiTimetable('1920').then((value) {
+                  this.apiResponseTimetable = value;
+                  firebaseUser(
+                      lumiEmail, lumiSub, apiResponseMod, apiResponseTimetable);
+                });
               });
             });
           }
@@ -110,20 +116,6 @@ class _LumiScreenState extends State<LumiScreen> {
     //print('pls work sighs ${response.data['access_token']}');
   }
 
-//  Future<dynamic> refreshApi() async {
-//    var dio = Dio();
-//    Response response = await dio.post(
-//      'https://luminus.portal.azure-api.net/docs/services/User/operations/SyncModules',
-//      options: Options(
-//          headers: {
-//            'Ocp-Apim-Subscription-Key': 'c9672e39d6854ec084706e9a944f8b21',
-//            'Authorization': 'Bearer ${this.accessToken}',
-//          }
-//      ),
-//    );
-//    return response.data;
-//  }
-
   Future<dynamic> callApiModule() async {
     var dio = Dio();
     Response response = await dio.get(
@@ -152,13 +144,14 @@ class _LumiScreenState extends State<LumiScreen> {
     return payloadMap['sub'];
   }
 
-  void firebaseUser(
-      String lumiEmail, String lumiSub, dynamic apiResponse) async {
+  void firebaseUser(String lumiEmail, String lumiSub, dynamic apiResponseMod,
+      dynamic apiResponseTimetable) async {
     try {
       print('hmm');
       final user = await _auth.signInWithEmailAndPassword(
           email: lumiEmail, password: lumiSub);
-      getModule(apiResponse);
+      getModule(apiResponseMod);
+      getTimetable(apiResponseTimetable);
     } catch (e) {
       print(e);
       try {
@@ -167,7 +160,8 @@ class _LumiScreenState extends State<LumiScreen> {
           email: lumiEmail,
           password: lumiSub,
         );
-        getModule(apiResponse);
+        getModule(apiResponseMod);
+        getTimetable(apiResponseTimetable);
       } catch (e) {
         print(e);
       }
@@ -188,17 +182,16 @@ class _LumiScreenState extends State<LumiScreen> {
           .collection('to do')
           .document(modName);
       doc.get().then((docSnapshot) {
-            if (!docSnapshot.exists)
-              {
-                Provider.of<CategoryData>(context, listen: false)
-                    .addCategory(modName);
-              }
-            print('calling tasks');
-            callApiTask(modId).then((value) {
-              print('API called');
-              getTask(modName, value);
-            });
-          });
+        if (!docSnapshot.exists) {
+          Provider.of<CategoryData>(context, listen: false)
+              .addCategory(modName);
+        }
+        print('calling tasks');
+        callApiTask(modId).then((value) {
+          print('API called');
+          getTask(modName, value);
+        });
+      });
     }
   }
 
@@ -218,8 +211,11 @@ class _LumiScreenState extends State<LumiScreen> {
     print('getTask');
     for (var task in apiResponse['data']) {
       String taskName = task['name'];
-      DateTime dueDateTime = (task['endDate'] == null) ? null : DateTime.parse(task['endDate']);
-      DateTime reminderDateTime = (dueDateTime == null) ? null : dueDateTime.subtract(Duration(days: 1));
+      DateTime dueDateTime =
+          (task['endDate'] == null) ? null : DateTime.parse(task['endDate']);
+      DateTime reminderDateTime = (dueDateTime == null)
+          ? null
+          : dueDateTime.subtract(Duration(days: 1));
       final FirebaseUser user = await _auth.currentUser();
       final email = user.email;
       DocumentReference doc = databaseReference
@@ -236,13 +232,52 @@ class _LumiScreenState extends State<LumiScreen> {
         });
         if (toAdd == true) {
           print('%%%% ADDING: $taskName');
-          Provider.of<TaskData>(context, listen: false)
-              .addTaskFirestore(categoryTitle, taskName, dueDateTime, reminderDateTime);
+          Provider.of<TaskData>(context, listen: false).addTaskFirestore(
+              categoryTitle, taskName, dueDateTime, reminderDateTime);
         }
       });
     }
     Navigator.pushNamed(context, TodoHome.id);
     flutterWebviewPlugin.close();
+  }
+
+  Future<dynamic> callApiTimetable(String term) async {
+    var dio = Dio();
+    Response response = await dio.get(
+      'https://luminus.azure-api.net/nus/StudentTimetable?Term=$term',
+      options: Options(headers: {
+        'Ocp-Apim-Subscription-Key': 'c9672e39d6854ec084706e9a944f8b21',
+        'Authorization': 'Bearer ${this.accessToken}',
+      }),
+    );
+    return response.data;
+  }
+
+  Future<void> getTimetable(dynamic apiResponse) async {
+    print('getTimetable');
+    for (var event in apiResponse['data']) {
+      String eventName = '${event['module']}  ${event['activityText']}';
+      DateTime date = DateTime.parse(event['eventdate']);
+      String eventTime = '${event['start_time']}:${event['end_time']}';
+      String location = event['room'];
+      final FirebaseUser user = await _auth.currentUser();
+      final email = user.email;
+      DocumentReference doc = databaseReference
+          .collection('user')
+          .document(email)
+          .collection('events')
+          .document('$eventName to $date');
+      doc.get().then((docSnapshot) {
+        if (!docSnapshot.exists) {
+          doc.setData({
+            "id": doc.documentID,
+            "title": eventName,
+            "description": "time: $eventTime \nlocation: $location",
+            "event_date": date == null ? null : Timestamp.fromDate(date),
+          });
+        }
+      });
+    }
   }
 
   @override
