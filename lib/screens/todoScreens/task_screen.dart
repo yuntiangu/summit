@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_dynamic_icon/flutter_dynamic_icon.dart';
+import 'package:provider/provider.dart';
 import 'package:summit2/components/add_fab.dart';
 import 'package:summit2/constants.dart';
 import 'package:summit2/components/bottom_bar.dart';
@@ -120,7 +121,7 @@ class _TaskScreenState extends State<TaskScreen> {
                   }
                 }),
             (showAlert)
-                ? (TaskData().numberTasksCategory(widget._title) > 0)
+                ? (Provider.of<TaskData>(context, listen: false).numberTasksCategory(widget._title) > 0)
                     ? AlertDialog(
                         title: Text(
                           'Congratulations!',
