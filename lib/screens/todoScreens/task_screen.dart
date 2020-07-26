@@ -120,75 +120,79 @@ class _TaskScreenState extends State<TaskScreen> {
                   }
                 }),
             (showAlert)
-                ? AlertDialog(
-                    title: Text(
-                      'Congratulations!',
-                      style: kProgressBarHeaderTextStyle,
-                      textAlign: TextAlign.center,
-                    ),
-                    content: Column(
-                      children: <Widget>[
-                        Text(
-                          'Remember that your hard work and consistency will most certainly pay off!\n\nHere is a new app icon for a fresh twist!',
-                          style: TextStyle(color: kDarkBlueGrey),
+                ? (TaskData().numberTasksCategory(widget._title) > 0)
+                    ? AlertDialog(
+                        title: Text(
+                          'Congratulations!',
+                          style: kProgressBarHeaderTextStyle,
+                          textAlign: TextAlign.center,
                         ),
-                        SizedBox(
-                          height: 12.0,
+                        content: Column(
+                          children: <Widget>[
+                            Text(
+                              'Remember that your hard work and consistency will most certainly pay off!\n\nHere is a new app icon for a fresh twist!',
+                              style: TextStyle(color: kDarkBlueGrey),
+                            ),
+                            SizedBox(
+                              height: 12.0,
+                            ),
+                            Image.asset(
+                              'images/rewards$imageName.png',
+                              width: 120.0,
+                              height: 120.0,
+                            ),
+                          ],
                         ),
-                        Image.asset(
-                          'images/rewards$imageName.png',
-                          width: 120.0,
-                          height: 120.0,
-                        ),
-                      ],
-                    ),
-                    actions: <Widget>[
-                      OutlineButton(
-                        child: Text(
-                          'Set',
-                          style: TextStyle(
-                              color: kDarkBlueGrey,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        onPressed: () async {
-                          try {
-                            if (await FlutterDynamicIcon
-                                .supportsAlternateIcons) {
-                              await FlutterDynamicIcon.setAlternateIconName(
-                                  imageIdentifier);
-                              print("App icon change successful");
+                        actions: <Widget>[
+                          OutlineButton(
+                            child: Text(
+                              'Set',
+                              style: TextStyle(
+                                  color: kDarkBlueGrey,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            onPressed: () async {
+                              try {
+                                if (await FlutterDynamicIcon
+                                    .supportsAlternateIcons) {
+                                  await FlutterDynamicIcon.setAlternateIconName(
+                                      imageIdentifier);
+                                  print("App icon change successful");
+                                  setState(() {
+                                    this.showAlert = false;
+                                  });
+                                  return;
+                                }
+                              } on PlatformException {} catch (e) {}
+                              print("Failed to change app icon");
+                            },
+                            borderSide: BorderSide(
+                              color: Colors.grey,
+                              width: 1.0,
+                            ),
+                          ),
+                          OutlineButton(
+                            child: Text(
+                              'Later',
+                              style: TextStyle(
+                                  color: kDarkBlueGrey,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            onPressed: () {
                               setState(() {
                                 this.showAlert = false;
                               });
-                              return;
-                            }
-                          } on PlatformException {} catch (e) {}
-                          print("Failed to change app icon");
-                        },
-                        borderSide: BorderSide(
-                          color: Colors.grey,
-                          width: 1.0,
-                        ),
-                      ),
-                      OutlineButton(
-                        child: Text(
-                          'Later',
-                          style: TextStyle(
-                              color: kDarkBlueGrey,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        onPressed: () {
-                          setState(() {
-                            this.showAlert = false;
-                          });
-                        },
-                        borderSide: BorderSide(
-                          color: Colors.grey,
-                          width: 1.0,
-                        ),
-                      ),
-                    ],
-                  )
+                            },
+                            borderSide: BorderSide(
+                              color: Colors.grey,
+                              width: 1.0,
+                            ),
+                          ),
+                        ],
+                      )
+                    : SizedBox(
+                        height: 0,
+                      )
                 : SizedBox(
                     height: 0,
                   ),
