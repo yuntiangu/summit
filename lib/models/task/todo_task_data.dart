@@ -105,6 +105,16 @@ class TaskData extends ChangeNotifier {
     return _tasks.length;
   }
 
+  int numberTasksCategory(String categoryName) {
+    int number = 0;
+    for (Task task in _tasks) {
+      if (task.categoryName == categoryName) {
+        number++;
+      }
+    }
+    return number;
+  }
+
   Future<void> addTaskFirestore(String categoryTitle, String taskTitle,
       DateTime dueDateTime, DateTime reminderDateTime) async {
     totalTaskCount++;

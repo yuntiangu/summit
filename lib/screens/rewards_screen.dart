@@ -128,7 +128,7 @@ class _RewardScreenState extends State<RewardScreen> {
                     Container(
                       width: 150.0,
                       height: 150.0,
-                      child: (rewardsCounter < 10)
+                      child: (rewardsCounter < 5)
                           ? DecoratedBox(
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
@@ -141,7 +141,7 @@ class _RewardScreenState extends State<RewardScreen> {
                                     height: 10.0,
                                   ),
                                   Text(
-                                    '10 Tasks',
+                                    '5 Tasks',
                                     style: TextStyle(
                                       fontSize: 16.0,
                                       color: kDarkBlueGrey,

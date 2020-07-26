@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:modal_progress_hud/modal_progress_hud.dart';
 import 'package:summit2/components/RoundedButton.dart';
 import 'package:summit2/constants.dart';
-
 import 'todoScreens/todo_home.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -18,6 +17,7 @@ class _LoginScreenState extends State<LoginScreen> {
   String email;
   String password;
   bool showSpinner = false;
+  bool showAlert = false;
 
   @override
   Widget build(BuildContext context) {
@@ -38,6 +38,15 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
               ),
+              (showAlert)
+                  ? Text(
+                      '   Wrong email or password',
+                      style: TextStyle(color: Colors.red),
+                    )
+                  : SizedBox(
+                      height: 0,
+                    ),
+              SizedBox(height: 5.0,),
               TextField(
                 keyboardType: TextInputType.emailAddress,
                 textAlign: TextAlign.center,
@@ -74,9 +83,13 @@ class _LoginScreenState extends State<LoginScreen> {
                     final user = await _auth.signInWithEmailAndPassword(
                         email: email, password: password);
                     if (user != null) {
+                      print(email);
                       Navigator.pushNamed(context, TodoHome.id);
                     }
                   } catch (e) {
+                    setState(() {
+                      showAlert = true;
+                    });
                     print(e);
                   } finally {
                     setState(() {

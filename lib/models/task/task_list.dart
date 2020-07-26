@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:summit2/constants.dart';
 import 'package:summit2/models/task/todo_task_data.dart';
 
 import 'task_tile.dart';
@@ -15,7 +16,17 @@ class TasksList extends StatelessWidget {
     return Consumer<TaskData>(
       builder: (context, taskData, child) {
         //print('task data: $taskData');
-        return Expanded(
+        return (taskData.numberTasksCategory(_categoryName) == 0) ? Center(
+          child: Column(
+            children: <Widget>[
+              SizedBox(height: MediaQuery.of(context).size.height / 3,),
+              Text(
+                'No Tasks Yet',
+                style: kProgressBarTextStyle,
+              ),
+            ],
+          ),
+        ) : Expanded(
           child: ListView.builder(
             scrollDirection: Axis.vertical,
             shrinkWrap: true,
