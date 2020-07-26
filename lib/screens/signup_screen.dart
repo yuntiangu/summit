@@ -17,6 +17,7 @@ class _SignupScreenState extends State<SignupScreen> {
   String email;
   String password;
   bool showSpinner = false;
+  bool showAlert = false;
 
   @override
   Widget build(BuildContext context) {
@@ -35,6 +36,15 @@ class _SignupScreenState extends State<SignupScreen> {
                   child: Image.asset('images/logoBlue.png'),
                 ),
               ),
+              (showAlert)
+                  ? Text(
+                '   Invalid email or email is already taken',
+                style: TextStyle(color: Colors.red),
+              )
+                  : SizedBox(
+                height: 0,
+              ),
+              SizedBox(height: 5.0,),
               TextField(
                 keyboardType: TextInputType.emailAddress,
                 textAlign: TextAlign.center,
@@ -76,6 +86,9 @@ class _SignupScreenState extends State<SignupScreen> {
                       Navigator.pushNamed(context, TodoHome.id);
                     }
                   } catch (e) {
+                    setState(() {
+                      showAlert = true;
+                    });
                     print(e);
                   } finally {
                     setState(() {
