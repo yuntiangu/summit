@@ -30,7 +30,7 @@ Phase 2:
 
 
 Phase 3:
-- Notifications (Android) to remind users of their tasks (Notifications would only be implemented on Android as iOS charges a fee)
+- Notifications (Android and LumiNUS) to remind users of their tasks (Notifications would only be implemented on Android as iOS charges a fee)
 - Implementing authentication services through LumiNUS
 - Automatic pulling of files (module, name, due date) into to-do list
 - Automatic pulling of timetable (module, tutorial/lecture/seminar, date, time and location) into calendar
