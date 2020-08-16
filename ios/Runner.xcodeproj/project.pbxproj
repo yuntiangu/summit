@@ -15,6 +15,18 @@
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
 		C055F11E247E97230032A300 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C055F11D247E97230032A300 /* GoogleService-Info.plist */; };
+		C08C940E24E96BB8002B2581 /* fifth@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C08C940224E96BB7002B2581 /* fifth@2x.png */; };
+		C08C940F24E96BB8002B2581 /* fifth@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C08C940324E96BB7002B2581 /* fifth@3x.png */; };
+		C08C941024E96BB8002B2581 /* third@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C08C940424E96BB7002B2581 /* third@2x.png */; };
+		C08C941124E96BB8002B2581 /* fourth@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C08C940524E96BB7002B2581 /* fourth@3x.png */; };
+		C08C941224E96BB8002B2581 /* second@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C08C940624E96BB7002B2581 /* second@3x.png */; };
+		C08C941324E96BB8002B2581 /* basic@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C08C940724E96BB8002B2581 /* basic@3x.png */; };
+		C08C941424E96BB8002B2581 /* basic@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C08C940824E96BB8002B2581 /* basic@2x.png */; };
+		C08C941524E96BB8002B2581 /* first@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C08C940924E96BB8002B2581 /* first@2x.png */; };
+		C08C941624E96BB8002B2581 /* second@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C08C940A24E96BB8002B2581 /* second@2x.png */; };
+		C08C941724E96BB8002B2581 /* first@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C08C940B24E96BB8002B2581 /* first@3x.png */; };
+		C08C941824E96BB8002B2581 /* fourth@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C08C940C24E96BB8002B2581 /* fourth@2x.png */; };
+		C08C941924E96BB8002B2581 /* third@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C08C940D24E96BB8002B2581 /* third@3x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -48,6 +60,18 @@
 		97C147001CF9000F007C117D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		97C147021CF9000F007C117D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C055F11D247E97230032A300 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		C08C940224E96BB7002B2581 /* fifth@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "fifth@2x.png"; path = "App Icons/fifth@2x.png"; sourceTree = "<group>"; };
+		C08C940324E96BB7002B2581 /* fifth@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "fifth@3x.png"; path = "App Icons/fifth@3x.png"; sourceTree = "<group>"; };
+		C08C940424E96BB7002B2581 /* third@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "third@2x.png"; path = "App Icons/third@2x.png"; sourceTree = "<group>"; };
+		C08C940524E96BB7002B2581 /* fourth@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "fourth@3x.png"; path = "App Icons/fourth@3x.png"; sourceTree = "<group>"; };
+		C08C940624E96BB7002B2581 /* second@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "second@3x.png"; path = "App Icons/second@3x.png"; sourceTree = "<group>"; };
+		C08C940724E96BB8002B2581 /* basic@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "basic@3x.png"; path = "App Icons/basic@3x.png"; sourceTree = "<group>"; };
+		C08C940824E96BB8002B2581 /* basic@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "basic@2x.png"; path = "App Icons/basic@2x.png"; sourceTree = "<group>"; };
+		C08C940924E96BB8002B2581 /* first@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "first@2x.png"; path = "App Icons/first@2x.png"; sourceTree = "<group>"; };
+		C08C940A24E96BB8002B2581 /* second@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "second@2x.png"; path = "App Icons/second@2x.png"; sourceTree = "<group>"; };
+		C08C940B24E96BB8002B2581 /* first@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "first@3x.png"; path = "App Icons/first@3x.png"; sourceTree = "<group>"; };
+		C08C940C24E96BB8002B2581 /* fourth@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "fourth@2x.png"; path = "App Icons/fourth@2x.png"; sourceTree = "<group>"; };
+		C08C940D24E96BB8002B2581 /* third@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "third@3x.png"; path = "App Icons/third@3x.png"; sourceTree = "<group>"; };
 		CF059D134404682AEEC68953 /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -139,6 +163,18 @@
 		E087CACF24AA2FF000B35F10 /* App Icons */ = {
 			isa = PBXGroup;
 			children = (
+				C08C940824E96BB8002B2581 /* basic@2x.png */,
+				C08C940724E96BB8002B2581 /* basic@3x.png */,
+				C08C940224E96BB7002B2581 /* fifth@2x.png */,
+				C08C940324E96BB7002B2581 /* fifth@3x.png */,
+				C08C940924E96BB8002B2581 /* first@2x.png */,
+				C08C940B24E96BB8002B2581 /* first@3x.png */,
+				C08C940C24E96BB8002B2581 /* fourth@2x.png */,
+				C08C940524E96BB7002B2581 /* fourth@3x.png */,
+				C08C940A24E96BB8002B2581 /* second@2x.png */,
+				C08C940624E96BB7002B2581 /* second@3x.png */,
+				C08C940424E96BB7002B2581 /* third@2x.png */,
+				C08C940D24E96BB8002B2581 /* third@3x.png */,
 			);
 			name = "App Icons";
 			sourceTree = "<group>";
@@ -206,11 +242,23 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C08C940F24E96BB8002B2581 /* fifth@3x.png in Resources */,
+				C08C940E24E96BB8002B2581 /* fifth@2x.png in Resources */,
+				C08C941824E96BB8002B2581 /* fourth@2x.png in Resources */,
 				97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */,
+				C08C941724E96BB8002B2581 /* first@3x.png in Resources */,
 				3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */,
+				C08C941024E96BB8002B2581 /* third@2x.png in Resources */,
+				C08C941924E96BB8002B2581 /* third@3x.png in Resources */,
+				C08C941224E96BB8002B2581 /* second@3x.png in Resources */,
 				C055F11E247E97230032A300 /* GoogleService-Info.plist in Resources */,
 				97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */,
+				C08C941624E96BB8002B2581 /* second@2x.png in Resources */,
 				97C146FC1CF9000F007C117D /* Main.storyboard in Resources */,
+				C08C941324E96BB8002B2581 /* basic@3x.png in Resources */,
+				C08C941524E96BB8002B2581 /* first@2x.png in Resources */,
+				C08C941124E96BB8002B2581 /* fourth@3x.png in Resources */,
+				C08C941424E96BB8002B2581 /* basic@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

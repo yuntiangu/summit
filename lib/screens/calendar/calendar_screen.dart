@@ -102,7 +102,8 @@ class _CalendarScreenState extends State<CalendarScreen> {
           eventDate: dt,
           id: inId,
         );
-        DateTime indexDate = DateTime(dt.year, dt.month, dt.day, 12, 0, 0, 0, 0);
+        DateTime indexDate =
+            DateTime(dt.year, dt.month, dt.day, 12, 0, 0, 0, 0);
         if (data[indexDate] == null) data[indexDate] = [];
         data[indexDate].add(toAdd);
       }
@@ -137,7 +138,7 @@ class _CalendarScreenState extends State<CalendarScreen> {
                   children: <Widget>[
                     TableCalendar(
                       events: _groupData(snapshot),
-                      initialCalendarFormat: CalendarFormat.week,
+                      initialCalendarFormat: CalendarFormat.month,
                       initialSelectedDay: DateTime.now(),
                       calendarStyle: CalendarStyle(
                           markersColor: Colors.grey[350],
