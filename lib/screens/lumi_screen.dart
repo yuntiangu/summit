@@ -1,15 +1,15 @@
 import 'dart:async';
 import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:dio/dio.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_webview_plugin/flutter_webview_plugin.dart';
 import 'package:provider/provider.dart';
-import 'package:summit2/models/calendar/calendar_event_data.dart';
 import 'package:summit2/models/category/todo_category_data.dart';
 import 'package:summit2/models/task/todo_task_data.dart';
 import 'package:summit2/screens/todoScreens/todo_home.dart';
-import 'package:dio/dio.dart';
 
 class LumiScreen extends StatefulWidget {
   static const String id = 'lumi_screen';
@@ -78,7 +78,7 @@ class _LumiScreenState extends State<LumiScreen> {
                 lumiEmail = getLumiEmail();
                 print(lumiEmail);
                 lumiSub = getLumiSub();
-                callApiTimetable('1920').then((value) {
+                callApiTimetable('2010').then((value) {
                   this.apiResponseTimetable = value;
                   firebaseUser(
                       lumiEmail, lumiSub, apiResponseMod, apiResponseTimetable);

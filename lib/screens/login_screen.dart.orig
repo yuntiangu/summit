@@ -6,7 +6,7 @@ import 'package:summit2/constants.dart';
 <<<<<<< HEAD
 
 =======
->>>>>>> uxRefinements
+>>>>>>> origin/uxRefinements
 import 'todoScreens/todo_home.dart';
 
 class LoginScreen extends StatefulWidget {

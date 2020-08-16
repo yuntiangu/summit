@@ -4,12 +4,18 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
 class TaskNotification {
+  static bool hasSent = false;
+
   Future<void> sendOutDueTaskNotifications() async {
-    final FirebaseUser user = await _auth.currentUser();
-    final String email = user.email;
-    final CollectionReference categoryCollection =
-        _db.collection('user').document(email).collection('to do');
-    retrieveTaskNotifyingTime(categoryCollection);
+    print(hasSent);
+    if (!hasSent) {
+      hasSent = true;
+      final FirebaseUser user = await _auth.currentUser();
+      final String email = user.email;
+      final CollectionReference categoryCollection =
+          _db.collection('user').document(email).collection('to do');
+      retrieveTaskNotifyingTime(categoryCollection);
+    }
   }
 
   Future<void> retrieveTaskNotifyingTime(CollectionReference colRef) async {
@@ -35,9 +41,6 @@ class TaskNotification {
 
   Future<void> init() async {
     print('task notifier init');
-    _user = await _auth.currentUser();
-    email = _user.email;
-    serverToken = await _firebaseMessaging.getToken();
     sendOutDueTaskNotifications();
   }
 }
