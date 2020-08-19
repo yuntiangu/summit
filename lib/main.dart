@@ -1,3 +1,6 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -15,6 +18,7 @@ import 'package:summit2/screens/rewards_screen.dart';
 import 'package:summit2/screens/signup_screen.dart';
 import 'package:summit2/screens/todoScreens/todo_home.dart';
 import 'package:summit2/screens/welcome_screen.dart';
+import 'package:testfairy/testfairy.dart';
 
 import 'models/task/todo_task_data.dart';
 import 'screens/calendar/calendar_screen.dart';
@@ -49,6 +53,25 @@ class ReceivedNotification {
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  HttpOverrides.global = TestFairy.httpOverrides();
+
+  runZonedGuarded(() async {
+    try {
+      FlutterError.onError = (details) => TestFairy.logError(details.exception);
+
+      // Call `await TestFairy.begin()` or any other setup code here.
+
+      runApp(MyApp());
+    } catch (error) {
+      TestFairy.logError(error);
+    }
+  }, (e, s) {
+    TestFairy.logError(e);
+  }, zoneSpecification: ZoneSpecification(
+    print: (self, parent, zone, message) {
+      TestFairy.log(message);
+    },
+  ));
 
   void _requestIOSPermissions() {
     flutterLocalNotificationsPlugin
